@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PudikovAntonTasks", "LessoneTwoExample\PudikovAntonTasks.csproj", "{AD108877-BAC1-449D-9740-1B35B099A7FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task0", "Task0\Task0.csproj", "{D1FF4DFE-599C-42FF-93CF-6DCC653C8034}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD108877-BAC1-449D-9740-1B35B099A7FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD108877-BAC1-449D-9740-1B35B099A7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD108877-BAC1-449D-9740-1B35B099A7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD108877-BAC1-449D-9740-1B35B099A7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FF4DFE-599C-42FF-93CF-6DCC653C8034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FF4DFE-599C-42FF-93CF-6DCC653C8034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FF4DFE-599C-42FF-93CF-6DCC653C8034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FF4DFE-599C-42FF-93CF-6DCC653C8034}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BC43E63-4FCF-4EE3-8A38-941BCE25F126}
+	EndGlobalSection
+EndGlobal
