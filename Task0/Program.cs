@@ -178,8 +178,6 @@ namespace Task0
             }
         }
 
-
-
         public static void AssignRandom(int[][] array)
         {
             Random rand = new Random();
