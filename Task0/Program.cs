@@ -59,9 +59,6 @@ namespace Task0
         {
             if (N < 0 || N % 2 == 0) throw new ArgumentOutOfRangeException();
 
-            //StringBuilder square = new StringBuilder();
-
-
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < N; j++)
@@ -69,7 +66,6 @@ namespace Task0
                     if (i == (N) / 2 && j == (N) / 2) { Console.Write(' '); }
                     else Console.Write('*');
                 }
-
                 Console.Write("\n");
             }
         }
@@ -82,125 +78,130 @@ namespace Task0
             Console.WriteLine("Введите размерности подмассивов: ");
             int[] elements = new int[N];
 
-            foreach (int el in elements)
-            {
-                elements[el] = Convert.ToInt32(Console.ReadLine());
-            }
-
-            int[][] unsortedArray = new int[N][];
-            int[][] sortedArr = new int [N][];
-            int[] tempArr;
-            int amountOfElements = N;
-            Random rand = new Random();
-
-            /**
-            //Initialize each element of unsortedArray
-            foreach(int el in elements)
-            {
-                unsortedArray[el] = new int[elements[el]]; //indexoutofbound
-            }
-            **/
-
             for (int i = 0; i < N; i++)
             {
-                unsortedArray[i] = new int[elements[i]];
+                Console.WriteLine($"Размер подмассива номер {i+1}:");
+                elements[i] = Convert.ToInt32(Console.ReadLine());
             }
 
-            //Assign each element of unsortedArray[i] for every i with a random integer number from 0 to 100
-            for (int i = 0; i < N; i++)
-            {
-                for (int j = 0; j < unsortedArray[i].Length; j++)
-                {
-                    unsortedArray[i][j] = rand.Next(0, 100);
-                }
-            }
-
-            //Put every element in tempArr
-            for (int i = 0; i < N; i++)
-            {
-                for (int j = 0; j < unsortedArray[i].Length; j++) 
-                {
-                    amountOfElements += unsortedArray[i][j];
-                }
-            }
-
-            //Create tempArr, where we store all elements
-            tempArr = new int[amountOfElements];
-
-           
-
-            //Create an array, where we store lenghths of subarrays of our array we got as a parameter
-            int[] unsortedLensOfArray = new int[N];
-
-            //Assign unsortedLensOfArray
-            for (int i = 0; i < N; i++)
-            {
-                unsortedLensOfArray[i] = unsortedArray[i].Length;
-            }
-
-
-            //Print an unsorted array
-            foreach (int[] el in unsortedArray)
-            {
-                PrintArray(el);
-            }
-
-            //Sort tempArr, where we store all elements
-            int[] sortedTempArr = BubbleSort(tempArr);
-
-            //Sort an array, where we store lenghths of subarrays of our array we got as a parameter
-            int[] sortedLensOfArray = BubbleSort(unsortedLensOfArray);
-
-            //newArr is a new array, where subarrays are placed in order of their lenghts
-            int[][] newArr = new int[N][];
+            int[][] Array = new int[N][];
+            int[] AllElements;
+            int amountOfElements = 0;
             
 
+            //Initialize each element of dArray
             for (int i = 0; i < N; i++)
             {
-                for (int j = 0; j < N; j++)
-                {
-                    newArr[i] = new int[sortedLensOfArray[j]];
-                }
+                Array[i] = new int[elements[i]];
             }
+
+            //Assign each element of Array[i] for every i with a random integer number from 0 to 100
+            AssignRandom(Array);
+
+
+            Console.WriteLine("Вывести неотсортированный массив: ");
+
+            //Print an unsorted array
+            PrintArray(Array);
+
+            //Count amountOfElements
+            amountOfElements = CountElements(Array);
+
+            //Create AllElements, where we store all elements
+            AllElements = new int[amountOfElements];
 
             int count = 0;
 
-            //Put elements from sortedTempArr to subarrays of newArr
+            //Put all elements to AllElements
             for (int i = 0; i < N; i++)
             {
-                for (int j = 0; j < N; j++)
+                for (int j = 0; j < Array[i].Length; j++)
                 {
-                    for (int k = count; k < amountOfElements; k++)
-                    {
-                        newArr[i][j] = sortedTempArr[k];
-                        count = k;
-                    }
+                        AllElements[count] = Array[i][j];
+                        count++;
                 }
             }
 
-            //Print a newArr
-            foreach (int[] el in newArr)
-            {
-                PrintArray(el);
-            }
+            //Sort AllElements, where we store all elements
+            int[] sortedAllElements = BubbleSort(AllElements);
+            
 
+            //Put elements from sortedAllElements to Array
+            PutElementsFrom1Dto2DArray(Array, sortedAllElements);
 
-            /**
-            //Sort an unsorted array
-            for (int i = 0; i < unsortedArray.Length; i++)
-            {
-                sortedArr[i] = BubbleSort(unsortedArray[i]);
-            }
-            **/
+            Console.WriteLine("Вывести отсортированный массив: ");
 
-            /**
             //Print a sorted array
-            foreach (int[] el in sortedArr)
-            {
-                PrintArray(el);
-            }
-            **/
+            PrintArray(Array);
 
+            //New array, where subarrs will be sorted by length
+            int[][] sorteByLensArray = new int[N][];
+            //Here we store lengths of subarrays
+            int[] lensOfSubarrs = new int[N];
+
+            //Assign elements of lensOfSubarrs
+            for (int i = 0; i < N; i++)
+            {
+                lensOfSubarrs[i] = elements[i];
+            }
+
+            //Sort lensOfSubarrs
+            int[] sortedlensOfSubarrs = BubbleSort(lensOfSubarrs);
+
+            //Assign sorteByLensArray
+            for (int i = 0; i < Array.Length; i++)
+            {
+                sorteByLensArray[i] = new int[sortedlensOfSubarrs[i]];
+            }
+
+            //Put elements from sortedAllElements to sorteByLensArray
+            PutElementsFrom1Dto2DArray(sorteByLensArray, sortedAllElements);
+
+            
+
+            Console.WriteLine("Вывести отсортированный массив, где подмассивы отсортированы по длине: ");
+            PrintArray(sorteByLensArray);
+
+        }
+
+        public static void PutElementsFrom1Dto2DArray(int[][] TwoDarray, int[] OneDarray)
+        {
+            int count = 0;
+
+            for (int i = 0; i < TwoDarray.Length; i++)
+            {
+                for (int j = 0; j < TwoDarray[i].Length; j++)
+                {
+                    TwoDarray[i][j] = OneDarray[count];
+                    count++;
+                }
+            }
+        }
+
+
+
+        public static void AssignRandom(int[][] array)
+        {
+            Random rand = new Random();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = 0; j < array[i].Length; j++)
+                {
+                    array[i][j] = rand.Next(0, 100);
+                }
+            }
+        }
+
+        public static int CountElements(int[][] array)
+        {
+            int amountOfElements = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                amountOfElements += array[i].Length;
+            }
+
+            return amountOfElements;
         }
 
         //This method sorts an array
@@ -230,18 +231,23 @@ namespace Task0
         
 
         //This method prints an array
-        public static void PrintArray(int[] array) //вывод поправить
+        public static void PrintArray(int[][] array) //вывод поправить
         {
-            Console.WriteLine();
-            StringBuilder sb = new StringBuilder("<");
+            Console.Write("{");
 
-            foreach (int el in array)
+            foreach (int[] i in array)
             {
-                sb.Append(el).Append(", ");
+                Console.Write("{");
+
+                foreach (int j in i)
+                {
+                    Console.Write(j);
+                    Console.Write(", ");
+                }
+                Console.Write("}");
+                Console.Write(", ");
             }
-            //sb.Remove(sb.Length - 2, 2).Append('>'); // System.ArgumentOutOfRangeException
-            sb.Append('>');
-            Console.WriteLine(sb);
+            Console.WriteLine("}");
         }
     }
 }
