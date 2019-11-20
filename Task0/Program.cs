@@ -214,7 +214,7 @@ namespace Task0
 
                 for (int i = 0; i < array.Length - 1; i++)
                 {
-                    if(array[i] > array[i + 1]) //indexoutofbound
+                    if(array[i] > array[i + 1])
                     {
                         temp = array[i];
                         array[i] = array[i + 1];

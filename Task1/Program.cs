@@ -13,8 +13,9 @@ namespace Task1
             //Console.WriteLine(Rectangle(1, 2));
             //Triangle();
             //AnotherTriangle();
-            XMasTree();
+            //XMasTree();
             //SumOfNumbers();
+            ArrayProcessing();
 
             Console.ReadKey();
         }
@@ -158,6 +159,101 @@ namespace Task1
         public static void FontAdjustment()
         {
 
+        }
+
+        public static void ArrayProcessing()
+        {
+            
+            int[] arr = new int[10];
+            int min, max;
+
+            AssignRandom(arr);
+
+            Console.WriteLine("Неотсортированный массив: ");
+
+            for(int i = 0; i < arr.Length; i++)
+            {
+                Console.Write(arr[i]);
+                Console.Write(' ');
+            }
+            
+
+            Console.WriteLine();
+
+            max = MaxInArr(arr);
+            min = MinInArr(arr);
+
+            Console.WriteLine("Минимум: {0}. Максимум: {1}", min, max);
+
+            BubbleSort(arr);
+
+            Console.WriteLine("Отсортированный массив: ");
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Console.Write(arr[i]);
+                Console.Write(' ');
+            }
+        }
+
+        public static void AssignRandom(int[] array)
+        {
+            Random rand = new Random();
+
+            for (int i = 0; i < array.Length; i++)
+            {  
+                    array[i] = rand.Next();
+            }
+        }
+
+        static int MaxInArr(int[] arr)
+        {
+            int max = arr[0];
+
+            foreach (int a in arr)
+            {
+                if (a > max)
+                {
+                    max = a;
+                }
+            }
+            return max;
+        }
+
+        static int MinInArr(int[] arr)
+        {
+            int min = arr[0];
+
+            foreach (int a in arr)
+            {
+                if (a < min)
+                {
+                    min = a;
+                }
+            }
+            return min;
+        }
+
+        public static void BubbleSort(int[] array)
+        {
+            bool sorted = false;
+            int temp;
+
+            while (!sorted)
+            {
+                sorted = true;
+
+                for (int i = 0; i < array.Length - 1; i++)
+                {
+                    if (array[i] > array[i + 1]) //indexoutofbound
+                    {
+                        temp = array[i];
+                        array[i] = array[i + 1];
+                        array[i + 1] = temp;
+                        sorted = false;
+                    }
+                }
+            }
         }
 
     }
