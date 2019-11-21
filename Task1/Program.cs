@@ -15,7 +15,17 @@ namespace Task1
             //AnotherTriangle();
             //XMasTree();
             //SumOfNumbers();
-            ArrayProcessing();
+            //ArrayProcessing();
+            //FontAdjustment();
+            //NoPositive();
+            //Console.WriteLine(NonNegSum(1, -1, -3, 2, 5, -10));
+
+            int[][] array = new int[3][];
+            array[0] = new int[2] { 1, 2 };
+            array[1] = new int[3] { 3, 4, 5 };
+            array[2] = new int[4] { 6, 7, 8, 9};
+
+            Console.WriteLine(TwoDArray(array));
 
             Console.ReadKey();
         }
@@ -78,20 +88,23 @@ namespace Task1
 
             Console.WriteLine("Введите число треугольников: ");
 
+
+            //Так как верхушка треугольника везде одинакова (меняется только отступ слева), то метод для его вывода вынесен в отдельный метод
+
             if (Int32.TryParse(Console.ReadLine(), out int N))
             {
                 PrintTipOfTree(N);
 
                 for (int i = 3; i <= N+1; ++i)
                 {
-                    PrintBodyOfTree(i);
+                    PrintPartOfTree(i, N);
                 }
 
             }
             else Console.WriteLine("Некорректные данные");
         }
 
-        static void PrintTipOfTree(int N) //нужно сдвинуть
+        static void PrintTipOfTree(int N)
         {
             for (int i = 0; i < N; i++)
             {
@@ -116,27 +129,32 @@ namespace Task1
             Console.Write("\n");
         }
 
-        public static void PrintBodyOfTree(int N) //перед тем как писать * делать отступы. Всегда в начале писать N пробелов, потом каждый раз на 1 меньше
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="N">Число треугольников</param>
+        /// <param name="S">Число отступов (совпадает с общим числом треугольников)</param>
+        /// 
+        public static void PrintPartOfTree(int N, int S) 
         {
-            int count1 = 1;
-            int count3 = 1;
-            //int NumberOfSpaces = N;
-            int count = 0;
+            int count = 1;
 
             for (int i = 1; i <= N; i++)
             {
-                for (int j = N - i + count3; j >= -1; j--)
+                //S понадобилось, тк число отступов в начале всегда должно быть неизменным
+                for (int j = S - i; j >= 0; j--)
                 {
                     Console.Write(' ');
                 }
-
-                for (int k = 1; k <= count1; k++)
+ 
+                for (int k = 1; k <= count; k++)  
                 {
                     Console.Write('*');
                 }
 
-                //count3--;
-                count1 += 2;
+                //с каждой новой строкой рисуем на 2 звезды больше
+                count += 2;
+
                 Console.Write("\n");
             }
         }
@@ -158,7 +176,32 @@ namespace Task1
 
         public static void FontAdjustment()
         {
+            Fonts font = Fonts.None; // по умолчанию нет шрифтов
 
+            Console.WriteLine($"Параметры надписи: {font}");
+
+            Console.WriteLine($"Введите: \n 1: {Fonts.Bold} \n 2: {Fonts.Italic} \n 3: {Fonts.Underline}");
+
+
+            //так как численные значения перечисления - степени двойки, то возводим 2 в степень, равную введенному значению
+            while (true)
+            {
+                if (int.TryParse(Console.ReadLine(), out int input))
+                {
+                    font = font ^ (Fonts)Math.Pow(2, (input - 1));  
+                    Console.WriteLine($"Параметры надписи: {font}");
+                }
+                else Console.WriteLine("Некорректные данные");
+            }
+        }
+
+        [Flags]
+        public enum Fonts
+        {
+            None = 0b_0000_0000, // 0,
+            Bold = 0b_0000_0001, // 1,
+            Italic = 0b_0000_0010, // 2,
+            Underline = 0b_0000_0100, // 4
         }
 
         public static void ArrayProcessing()
@@ -180,6 +223,7 @@ namespace Task1
 
             Console.WriteLine();
 
+            //Ищем максимум и минимум в массиве
             max = MaxInArr(arr);
             min = MinInArr(arr);
 
@@ -256,7 +300,129 @@ namespace Task1
             }
         }
 
+        public static void NoPositive()
+        {
+            int[][][] arr = new int[5][][];
+
+            //Инициализируем подмассивы
+            InitializeSubArrs(arr);
+
+            //Инициализируем элементы случайными числами
+            AssignRandom(arr);
+
+            Console.WriteLine("Вывести изначальный массив: ");
+            PrintArray(arr);
+
+            //Обнуляем все числа больше нуля
+            MakeZero(arr);
+
+            Console.WriteLine("Вывести массив, где все числа > 0 заменены нулями: ");
+            PrintArray(arr);
+        }
+
+        static void InitializeSubArrs(int[][][] arr)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = new int[5][];
+            }
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr[i].Length; j++)
+                {
+                    arr[i][j] = new int[5];
+                }
+            }
+        }
+
+        static void AssignRandom(int[][][] arr)
+        {
+            Random rand = new Random();
+
+            for(int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr[i].Length; j++)
+                {
+                    for(int k = 0; k < arr[i][j].Length; k++)
+                    {
+                        arr[i][j][k] = rand.Next(-50, 50);
+                    }
+                }
+            }
+        }
+
+        static void MakeZero(int[][][] arr)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr[i].Length; j++)
+                {
+                    for (int k = 0; k < arr[i][i].Length; k++)
+                    {
+                        if (arr[i][j][k] > 0) arr[i][j][k] = 0;
+                    }
+                }
+            }
+        }
+
+        public static void PrintArray(int[][][] arr)
+        {
+            Console.Write("{");
+
+            foreach (int[][] i in arr)
+            {
+                Console.Write("{");
+
+                foreach (int[] j in i)
+                {
+                    Console.Write(", ");
+
+                    foreach(int k in j)
+                    {
+                        Console.Write(" " + k);
+                    }
+                    Console.Write("}");
+                    Console.Write(", ");
+                }
+                Console.Write("}");
+                Console.Write(", ");
+            }
+            Console.WriteLine("}");
+        }
+
+        public static int NonNegSum(params int[] arr)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] > 0) sum += arr[i];
+            }
+
+            return sum;
+        }
+
+        public static int TwoDArray(int[][] arr)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                for (int j = 0; j < arr[i].Length; j++)
+                {
+                    if ((i + j) % 2 == 0) sum += arr[i][j];
+                }
+            }
+            return sum;
+        }
+
+        public static int AvgStrLength(string str)
+        {
+            int avgLength = 0;
+            int numOfWords = 0;
+
+            return avgLength;
+        }
     }
-
-
 }
