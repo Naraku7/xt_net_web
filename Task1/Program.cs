@@ -20,12 +20,17 @@ namespace Task1
             //NoPositive();
             //Console.WriteLine(NonNegSum(1, -1, -3, 2, 5, -10));
 
-            int[][] array = new int[3][];
-            array[0] = new int[2] { 1, 2 };
-            array[1] = new int[3] { 3, 4, 5 };
-            array[2] = new int[4] { 6, 7, 8, 9};
+            //int[][] array = new int[3][];
+            //array[0] = new int[2] { 1, 2 };
+            //array[1] = new int[3] { 3, 4, 5 };
+            //array[2] = new int[4] { 6, 7, 8, 9 };
 
-            Console.WriteLine(TwoDArray(array));
+            //Console.WriteLine(TwoDArray(array));
+
+            Console.WriteLine(AvgStrLength("aaa., aaaa,  aa! "));
+
+            CharDoubler();
+            
 
             Console.ReadKey();
         }
@@ -176,11 +181,11 @@ namespace Task1
 
         public static void FontAdjustment()
         {
-            Fonts font = Fonts.None; // по умолчанию нет шрифтов
+            Styles style = Styles.None; // по умолчанию нет шрифтов
 
-            Console.WriteLine($"Параметры надписи: {font}");
+            Console.WriteLine($"Параметры надписи: {style}");
 
-            Console.WriteLine($"Введите: \n 1: {Fonts.Bold} \n 2: {Fonts.Italic} \n 3: {Fonts.Underline}");
+            Console.WriteLine($"Введите: \n 1: {Styles.Bold} \n 2: {Styles.Italic} \n 3: {Styles.Underline}");
 
 
             //так как численные значения перечисления - степени двойки, то возводим 2 в степень, равную введенному значению
@@ -188,15 +193,15 @@ namespace Task1
             {
                 if (int.TryParse(Console.ReadLine(), out int input))
                 {
-                    font = font ^ (Fonts)Math.Pow(2, (input - 1));  
-                    Console.WriteLine($"Параметры надписи: {font}");
+                    style ^= (Styles)Math.Pow(2, (input - 1));  
+                    Console.WriteLine($"Параметры надписи: {style}");
                 }
                 else Console.WriteLine("Некорректные данные");
             }
         }
 
         [Flags]
-        public enum Fonts
+        public enum Styles
         {
             None = 0b_0000_0000, // 0,
             Bold = 0b_0000_0001, // 1,
@@ -417,12 +422,58 @@ namespace Task1
             return sum;
         }
 
-        public static int AvgStrLength(string str)
+        public static int AvgStrLength(string str) //пока работает немного неверно
         {
-            int avgLength = 0;
+            return GetNumOfLetters(str) / GetNumOfWords(str);
+        }
+
+        static int GetNumOfLetters(string str)
+        {
+            int numOfLetters = 0;
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (Char.IsLetter(str[i])) numOfLetters++;
+            }
+
+            return numOfLetters;
+        }
+
+        static int GetNumOfWords(string str)
+        {
             int numOfWords = 0;
 
-            return avgLength;
+            //Числа тоже считаются словами, при необходимости могу легко поправить
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (Char.IsSeparator(str[i]) && !Char.IsWhiteSpace(str[i])) str.Replace(str[i], '\0');
+            }
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (Char.IsWhiteSpace(str[i])) numOfWords++;
+            }
+
+            return numOfWords;
+        }
+
+        public static void CharDoubler() //не работает, удваивает только последний символ
+        {
+
+            Console.WriteLine("Введите первую строку: ");
+
+            string str1 = Console.ReadLine();
+
+            Console.WriteLine("Введите вторую строку: ");
+
+            string str2 = Console.ReadLine();
+
+            char[] chars = str2.ToCharArray();
+            
+
+            Console.WriteLine("Результирующая строка: ");
+
+            Console.WriteLine(str1);
         }
     }
 }
