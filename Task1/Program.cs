@@ -27,10 +27,11 @@ namespace Task1
 
             //Console.WriteLine(TwoDArray(array));
 
-            Console.WriteLine(AvgStrLength("aaa., aaaa,  aa! "));
+            Console.WriteLine(AvgStrLength("aaa., aaaa,  aaиап! "));
 
-            CharDoubler();
-            
+            //CharDoubler();
+
+            //test("11фф11 gfg  , -  dgg ,");
 
             Console.ReadKey();
         }
@@ -422,44 +423,31 @@ namespace Task1
             return sum;
         }
 
-        public static int AvgStrLength(string str) //пока работает немного неверно
-        {
-            return GetNumOfLetters(str) / GetNumOfWords(str);
+        public static int AvgStrLength(string str) 
+        { 
+            char[] chars = str.ToCharArray();
+
+            //Второй параметр StringSplitOptions.RemoveEmptyEntries говорит, что надо удалить все пустые подстроки
+
+            return GetNumOfLetters(chars) / str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
         }
 
-        static int GetNumOfLetters(string str)
+        static int GetNumOfLetters(char[] arr)
         {
             int numOfLetters = 0;
 
-            for (int i = 0; i < str.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
-                if (Char.IsLetter(str[i])) numOfLetters++;
+                if (Char.IsLetter(arr[i])) numOfLetters++;
             }
 
             return numOfLetters;
         }
 
-        static int GetNumOfWords(string str)
+
+        public static void CharDoubler() 
         {
-            int numOfWords = 0;
-
-            //Числа тоже считаются словами, при необходимости могу легко поправить
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (Char.IsSeparator(str[i]) && !Char.IsWhiteSpace(str[i])) str.Replace(str[i], '\0');
-            }
-
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (Char.IsWhiteSpace(str[i])) numOfWords++;
-            }
-
-            return numOfWords;
-        }
-
-        public static void CharDoubler() //не работает, удваивает только последний символ
-        {
-
+            StringBuilder res = new StringBuilder();
             Console.WriteLine("Введите первую строку: ");
 
             string str1 = Console.ReadLine();
@@ -468,12 +456,16 @@ namespace Task1
 
             string str2 = Console.ReadLine();
 
-            char[] chars = str2.ToCharArray();
+            //Если символ встречается, то прибавляем его дважды, иначе единожды
+            foreach(char ch in str1)
+            {
+                if (str2.Contains(ch)) res.Append(ch).Append(ch);
+                else res.Append(ch);
+            }
             
-
             Console.WriteLine("Результирующая строка: ");
 
-            Console.WriteLine(str1);
+            Console.WriteLine(res);
         }
     }
 }
