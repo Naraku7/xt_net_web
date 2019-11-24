@@ -10,28 +10,6 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine(Rectangle(1, 2));
-            //Triangle();
-            //AnotherTriangle();
-            //XMasTree();
-            //SumOfNumbers();
-            //ArrayProcessing();
-            //FontAdjustment();
-            //NoPositive();
-            //Console.WriteLine(NonNegSum(1, -1, -3, 2, 5, -10));
-
-            //int[][] array = new int[3][];
-            //array[0] = new int[2] { 1, 2 };
-            //array[1] = new int[3] { 3, 4, 5 };
-            //array[2] = new int[4] { 6, 7, 8, 9 };
-
-            //Console.WriteLine(TwoDArray(array));
-
-            Console.WriteLine(AvgStrLength("aaa., aaaa,  aaиап! "));
-
-            //CharDoubler();
-
-            //test("11фф11 gfg  , -  dgg ,");
 
             Console.ReadKey();
         }
