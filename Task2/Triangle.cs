@@ -8,18 +8,22 @@ namespace Task2
 {
     class Triangle
     {
-        double a, b, c;
-        double P { get => 0.5 * (a + b + c); } //полупериметр из формулы Герона
-        public double Perimeter { get => a + b + c; } 
-        public double Square { get => Math.Sqrt(P * (P - a) * (P - b) * (P - c)); }
+        public double A { get; }
+        public double B { get; } 
+        public double C { get; }   
+        double P  => 0.5 * Perimeter;  //полупериметр из формулы Герона
+        public double Perimeter => A + B + C;
+        public double Square => Math.Sqrt(P * (P - A) * (P - B) * (P - C)); 
 
         public Triangle(double a, double b, double c)
         {
             if (a <= 0 || b <= 0 || c <= 0) 
-                throw new ArgumentException("Сторона треугольника не можеть быть меньше нуля или равна ему");
-            this.a = a;
-            this.b = b;
-            this.c = c;
+                throw new ArgumentException("Triangle side cannot equal to or less than zero");
+            if(a + b >= c || b + c >= a || c + a >= b)
+                throw new ArgumentException("The sum of two triangle sides cannot equal to or greater than the third side");
+            this.A = a;
+            this.B = b;
+            this.C = c;
         }
         
         public Triangle() { }

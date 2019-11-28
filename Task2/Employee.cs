@@ -14,7 +14,8 @@ namespace Task2
         public Employee(string firstName, string secondName, string surname, DateTime birthDate, int lengthOfService, string post)
             : base (firstName, secondName, surname, birthDate)
         {
-            if (lengthOfService < 0) throw new ArgumentException("Length of service cannot be negative");
+            if (lengthOfService < 0) 
+                throw new ArgumentException("Length of service cannot be negative", "lengthOfService");
 
             LengthOfService = lengthOfService;
             Post = post;

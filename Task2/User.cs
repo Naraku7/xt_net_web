@@ -14,6 +14,9 @@ namespace Task2
         public DateTime BirthDate { get; }
         public int Age { get; }
 
+        public User(string firstName, string surname, DateTime birthDate)
+            : this(firstName, "", surname,  birthDate) { }
+
         public User(string firstName, string secondName, string surname, DateTime birthDate) 
         {
             FirstName = firstName;

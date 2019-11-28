@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace Task2
 {
-    public class Round : Circle
+    public class Circle
     {
-        public new Point Center { get; }
-        public new double Radius { get; }
-        public double Area => Math.PI * Radius * Radius; 
-
-
-        public Round(Point center, double radius)
+        public Point Center { get; }
+        public double Radius { get; }
+        public double Circuit => 2 * Math.PI * Radius;
+        
+        public Circle(Point center, double radius)
         {
             if (radius <= 0) throw new ArgumentException("Radius cannot equal to or less than zero", "radius");
 
             Center = center;
-            Radius = radius; 
+            Radius = radius;
         }
 
-        public Round() { }
-    } 
+        public Circle() { }
+    }
 }
+
