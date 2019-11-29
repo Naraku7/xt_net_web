@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Task2
 {
-    public class Circle
+    public class Circle : RoundFigure
     {
-        public Point Center { get; }
-        public double Radius { get; }
         public double Circuit => 2 * Math.PI * Radius;
         
         public Circle(Point center, double radius)

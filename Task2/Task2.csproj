@@ -66,6 +66,7 @@
     <Compile Include="Rectangle.cs" />
     <Compile Include="Ring.cs" />
     <Compile Include="Round.cs" />
+    <Compile Include="RoundFigure.cs" />
     <Compile Include="Triangle.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

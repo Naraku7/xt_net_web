@@ -45,21 +45,23 @@ namespace Task2
             //Circle ring1 = new Ring(new Point(1, 1), 3, 4);
             //GraphicsEditor.PrintFigure((Ring)ring1);
 
-            //Ring ring = new Ring(new Point(1, 1), 3, 4);
-            //GraphicsEditor.PrintFigure(ring);
-            //GraphicsEditor.PrintFigure(new Rectangle(2, 3));
+            Ring ring = new Ring(new Point(1, 1), 3, 4);
+            GraphicsEditor.PrintFigure((RoundFigure)ring);
 
-            Bonus[] bonuses = new Bonus[] { new Cherry(), new Apple() };
-            Bonus[] loot = new Bonus[] { new Cherry()};
-            Monster[] monsters = new Monster[] { new Wolf(100), new Bear(200) };
-            Obstacle[] obstacles = new Obstacle[] { new Rock(5, 2, "sand"), new Tree(7, 1, "Oak") };
-            Field field = new Field(1000, 1000, bonuses, monsters, obstacles);
-            Character hero = new Character("Eugene", 100, 100, loot);
-            hero.AllLooted = true;
+            Round round = new Round(new Point(1, 1), 5);
+            GraphicsEditor.PrintFigure((RoundFigure)round);
 
-            Game game = new Game(field, hero);
+            //Bonus[] bonuses = new Bonus[] { new Cherry(), new Apple() };
+            //Bonus[] loot = new Bonus[] { new Cherry()};
+            //Monster[] monsters = new Monster[] { new Wolf(100), new Bear(200) };
+            //Obstacle[] obstacles = new Obstacle[] { new Rock(5, 2, "sand"), new Tree(7, 1, "Oak") };
+            //Field field = new Field(1000, 1000, bonuses, monsters, obstacles);
+            //Character hero = new Character("Eugene", 100, 100, loot);
+            //hero.AllLooted = true;
 
-            game.Play();
+            //Game game = new Game(field, hero);
+
+            //game.Play();
 
             Console.ReadKey();
         }

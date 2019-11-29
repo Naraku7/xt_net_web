@@ -8,19 +8,12 @@ namespace Task2
 {
     class GraphicsEditor
     {
-        //public static Ring CreateFigure(Point center, double innerRadius, double outerRadius)
-        //{
-        //    return new Ring(center, innerRadius, outerRadius);
-        //}
-
         public static void PrintFigure(Ring ring)
         {
             Console.WriteLine("Type of the object: " + ring.GetType());
             Console.WriteLine("Center of the ring: (" + ring.Center.X + ", " + ring.Center.Y + ")");
-            //Console.WriteLine("Inner Radius of the ring: " + ring.InnerCircle.Radius);
-            //Console.WriteLine("Outer Radius of the ring: " + ring.OuterCircle.Radius);
-            Console.WriteLine("Inner Radius of the ring: " + ring.InnerRadius);
-            Console.WriteLine("Outer Radius of the ring: " + ring.OuterRadius);
+            Console.WriteLine("Inner Radius of the ring: " + ring.InnerCircle.Radius);
+            Console.WriteLine("Outer Radius of the ring: " + ring.OuterCircle.Radius);
             Console.WriteLine("Area of the ring: " + ring.Area);
             Console.WriteLine("Sum of circuits of the ring: " + ring.SumOfCircuits);
         }
@@ -38,10 +31,13 @@ namespace Task2
             Console.WriteLine("Curcuit of the circle: " + circle.Circuit);
         }
 
-        //public static Round CreateFigure(Point center, double radius) //набор параметров тот же
-        //{
-        //    return new Round(center, radius);
-        //}
+        public static void PrintFigure(RoundFigure roundFigure)
+        {
+            Console.WriteLine("Type of the object: " + roundFigure.GetType());
+            Console.WriteLine("Center of the round figure: (" + roundFigure.Center.X + ", " + roundFigure.Center.Y + ")");
+            Console.WriteLine("Radius of the round figure: " + roundFigure.Radius);
+        }
+
 
         public static void PrintFigure(Round round)
         {
