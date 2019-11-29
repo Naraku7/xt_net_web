@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Task2
 {
-    public abstract class RoundFigure
+    public abstract class RoundFigure : Figure
     {
-        public Point Center { get; set; }
         public double Radius { get; set; }
     }
 }

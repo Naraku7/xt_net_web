@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Figure.cs" />
     <Compile Include="GameTask\Bonuses\Apple.cs" />
     <Compile Include="GameTask\Bonuses\Bonus.cs" />
     <Compile Include="GameTask\Character.cs" />

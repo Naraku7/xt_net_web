@@ -58,6 +58,7 @@ namespace Task2
             Console.WriteLine("The first point of the line: \n" + "X: " + line.Point1.X + "\nY: " + line.Point1.Y);
             Console.WriteLine("The second point of the line: \n" + "X: " + line.Point2.X + "\nY: " + line.Point2.Y);
             Console.WriteLine("The length of the line: " + line.Length);
+            Console.WriteLine("The center of the line: \n" + "X: " + line.Center.X + "\nY: " + line.Center.Y);
         }
 
         public static Rectangle CreateFigure(double length, double width)
@@ -72,6 +73,7 @@ namespace Task2
             Console.WriteLine("The width of the rectangle: " + rectangle.Width);
             Console.WriteLine("The perimeter of the rectangle: " + rectangle.Perimeter);
             Console.WriteLine("The area of the rectangle: " + rectangle.Area);
+            Console.WriteLine("The center of the rectangle: \n" + "X: " + rectangle.Center.X + "\nY: " + rectangle.Center.Y);
         }
 
     }

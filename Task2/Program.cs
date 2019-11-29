@@ -46,10 +46,16 @@ namespace Task2
             //GraphicsEditor.PrintFigure((Ring)ring1);
 
             Ring ring = new Ring(new Point(1, 1), 3, 4);
-            GraphicsEditor.PrintFigure((RoundFigure)ring);
+            //GraphicsEditor.PrintFigure((RoundFigure)ring);
 
             Round round = new Round(new Point(1, 1), 5);
-            GraphicsEditor.PrintFigure((RoundFigure)round);
+            //GraphicsEditor.PrintFigure((RoundFigure)round);
+
+            var line = new Line(new Point(1, 1), new Point(2, 2));
+            GraphicsEditor.PrintFigure(line);
+            //Console.WriteLine(line.Length);
+
+            //GraphicsEditor.PrintFigure(new Rectangle(5, 10));
 
             //Bonus[] bonuses = new Bonus[] { new Cherry(), new Apple() };
             //Bonus[] loot = new Bonus[] { new Cherry()};
