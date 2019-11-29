@@ -17,9 +17,9 @@ namespace Task2
             set => _symbols[id] = value;
         }
 
-        public static string operator +(MyString str1, MyString str2)
-        {
-            return "";
+        public static MyString operator +(MyString str1, MyString str2)
+        {         
+            return new MyString(str1.ToString() + str2.ToString());
         }
 
         public MyString(params char[] symbols)
@@ -44,6 +44,16 @@ namespace Task2
         public override string ToString()
         {
             return new string(_symbols);
+        }
+
+        public int IndexOf(char c)
+        {
+            for (int i = 0; i < this.Length; i++)
+            {
+                if (this._symbols[i] == c) return i;
+            }
+
+            return -1;
         }
 
         public char[] ToCharArray()
