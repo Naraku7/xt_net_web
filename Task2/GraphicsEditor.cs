@@ -18,10 +18,7 @@ namespace Task2
             Console.WriteLine("Sum of circuits of the ring: " + ring.SumOfCircuits);
         }
 
-        public static Circle CreateFigure(Point center, double radius)
-        {
-            return new Circle(center, radius);
-        }
+        public static Circle CreateFigure(Point center, double radius) => new Circle(center, radius);
 
         public static void PrintFigure(Circle circle)
         {
@@ -47,10 +44,7 @@ namespace Task2
             Console.WriteLine("Area of the round: " + round.Area);
         }
 
-        public static Line CreateFigure(Point point1, Point point2)
-        {
-            return new Line(point1, point2);
-        }
+        public static Line CreateFigure(Point point1, Point point2) => new Line(point1, point2);
 
         public static void PrintFigure(Line line)
         {
@@ -61,10 +55,7 @@ namespace Task2
             Console.WriteLine("The center of the line: \n" + "X: " + line.Center.X + "\nY: " + line.Center.Y);
         }
 
-        public static Rectangle CreateFigure(double length, double width)
-        {
-            return new Rectangle(length, width);
-        }
+        public static Rectangle CreateFigure(double length, double width) => new Rectangle(length, width);
 
         public static void PrintFigure(Rectangle rectangle)
         {

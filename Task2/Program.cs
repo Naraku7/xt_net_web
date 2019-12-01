@@ -17,7 +17,13 @@ namespace Task2
             MyString s = new MyString("It's a test");
             MyString m = new MyString("It's a test too");
             Console.WriteLine(s.IndexOf('s'));
-            //Console.WriteLine(s+m);
+            Console.WriteLine(s+m);
+            Console.WriteLine(m.ToString());
+            Console.WriteLine(s[2]);
+
+            Point p = new Point(1, 2);
+            Console.WriteLine(p.X);
+       
 
             Console.ReadKey();
         }

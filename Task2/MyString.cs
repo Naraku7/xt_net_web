@@ -22,29 +22,21 @@ namespace Task2
             return new MyString(str1.ToString() + str2.ToString());
         }
 
-        public MyString(params char[] symbols)
-        {
-            _symbols = symbols;
-        }
+        public MyString(params char[] symbols) => _symbols = symbols;
 
-        public MyString(string str)
-        {
-            _symbols = str.ToCharArray();
-        }
+
+        public MyString(string str) => _symbols = str.ToCharArray();
+
 
         public MyString() { }
 
-        public IEnumerator GetEnumerator()
-        {
-            return _symbols.GetEnumerator();
-        }
+        public IEnumerator GetEnumerator() => _symbols.GetEnumerator();
+        
 
         public int Length => this._symbols.Length; 
 
-        public override string ToString()
-        {
-            return new string(_symbols);
-        }
+        public override string ToString() => new string(_symbols);
+       
 
         public int IndexOf(char c)
         {
@@ -56,10 +48,8 @@ namespace Task2
             return -1;
         }
 
-        public char[] ToCharArray()
-        {
-            return _symbols;
-        }
+        public char[] ToCharArray() => _symbols;
+
 
         public override bool Equals(object obj)
         {
