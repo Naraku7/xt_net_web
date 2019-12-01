@@ -69,10 +69,6 @@ namespace Task2
             return true;
         }
 
-        public override int GetHashCode()
-        {
-            return this.ToString().GetHashCode();
-        }
-
+        public override int GetHashCode() => this.ToString().GetHashCode();
     }
 }
