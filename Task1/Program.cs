@@ -10,7 +10,7 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-
+            Triangle();
             Console.ReadKey();
         }
 
@@ -338,11 +338,11 @@ namespace Task1
 
         static void MakeZero(int[][][] arr)
         {
-            for (int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.GetLength(0); i++)
             {
-                for (int j = 0; j < arr[i].Length; j++)
+                for (int j = 0; j < arr.GetLength(1); j++)
                 {
-                    for (int k = 0; k < arr[i][i].Length; k++)
+                    for (int k = 0; k < arr.GetLength(2); k++)
                     {
                         if (arr[i][j][k] > 0) arr[i][j][k] = 0;
                     }

@@ -19,7 +19,7 @@ namespace Task0
             Console.WriteLine(IsSimple(1));
             Console.WriteLine(IsSimple(2));
             Console.WriteLine(IsSimple(6));
-
+            f
             PrintSquare(7);
             **/
 
