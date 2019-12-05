@@ -8,21 +8,39 @@ namespace LessoneTwoExample
 {
     class Program
     {
+        public delegate double MathFunction(double n1, double n2);
+
         static void Main(string[] args)
         {
-            int a = new int();
-            Console.WriteLine(a);
+            MathFunction func =  new MathFunction(Multiply);
+
+            DoSome(func);
+
+            func(3, 5);
+
+            func.Invoke(3,5);
+
             Console.ReadLine();
-
-            
         }
 
-        struct Vector
+        static double Multiply(double n1, double n2) => n1 * n2;
+
+        static void DoSome(MathFunction function)
         {
-            Point a = new Point();
-        }
+            var res = 0.0;
+            if(function != null)
+            //res = function(3, 5);
+            res = function.Invoke(3, 5);
 
-        class Point
+            Console.WriteLine(res);
+        }
+    }
+
+    public class Calculator
+    {
+
+
+        public Calculator()
         {
 
         }
