@@ -47,6 +47,11 @@ namespace Task3
             Console.WriteLine("Length: " + test.Length);
             Console.WriteLine("Capacity: " + test.Capacity);
 
+            DynamicArray<int> test2 = test.Clone() as DynamicArray<int>;
+            Console.WriteLine("test2 Capacity " + test2.Capacity);
+            Console.WriteLine("test2 Length " + test2.Length);
+
+
 
 
             Console.ReadKey();

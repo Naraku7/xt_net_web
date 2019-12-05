@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Task3
 {
-    class DynamicArray<T> : IEnumerable<T>, ICloneable//, ICollection<T>, IList<T>
+    class DynamicArray<T> : IEnumerable, IEnumerable<T>, ICloneable//, ICollection<T>, IList<T>
     {
         private T[] _array;
         private T[] _tempArr;     
@@ -16,6 +16,12 @@ namespace Task3
         {
             _array = new T[8];
             Length = 8;
+        }
+
+        public DynamicArray(int n)
+        {
+            _array = new T[n];
+            Length = n;
         }
 
         public DynamicArray(T[] array)
@@ -67,7 +73,7 @@ namespace Task3
             }
         }
 
-        public int Length { get; private set; } //длина массива, который подан на вход 
+        public int Length { get; private set; }
 
         public void Add(T item) //в этом методе добавь увеличение Length и мб Capacity
         {
@@ -92,21 +98,22 @@ namespace Task3
         {
             if (Length + collection.Count() <= Capacity)
             {
-                _tempArr = collection.ToArray<T>(); //не знаю, можно ли использовать этот метод. Если нет, то нужно как-то еще скопировать 
+                //_tempArr = collection.ToArray<T>();  
 
-                //_tempArr = new T[collection.Count()]; //нужно ли?
+                //Вместо collection.ToArray<T>() делаем через foreach
+                _tempArr = new T[collection.Count()];
 
-                //int Count = 0;
+                int Count = 0;
 
-                //foreach (T item in collection)
-                //{
-                //    _tempArr[Count] = item;
-                //    Count++;    
-                //}
+                foreach (T item in collection)
+                {
+                    _tempArr[Count] = item;
+                    Count++;
+                }
 
-                _tempArr.CopyTo(_array, Length);
+                _tempArr.CopyTo(_array, Length); //вставляем новые элементы
                 
-                Length += collection.Count(); //длина массива стала больше
+                Length += collection.Count(); 
             }
             else
             {
@@ -122,20 +129,38 @@ namespace Task3
 
                 _tempArr.CopyTo(_array, 0); //записываем старые элементы
 
-                _tempArr = collection.ToArray<T>(); //не знаю, можно ли использовать этот метод. Если нет, то нужно как-то еще скопировать
+                //_tempArr = collection.ToArray<T>(); 
 
-                _tempArr.CopyTo(_array, Length); //выход за границы массива
+                //Вместо collection.ToArray<T>() делаем через foreach
+                _tempArr = new T[collection.Count()]; 
 
-                Length += collection.Count(); //длина массива стала больше
+                int Count = 0;
+
+                foreach (T item in collection)
+                {
+                    _tempArr[Count] = item;
+                    Count++;
+                }
+
+                _tempArr.CopyTo(_array, Length); //вставляем новые элементы
+
+                Length += collection.Count();
             }
 
         }
 
-      
+        //сделать
+        public bool Insert(int index, T item)
+        {
+            return true;
+        }
+
 
         public object Clone()
         {
-            throw new NotImplementedException();
+            DynamicArray<T> Temp = new DynamicArray<T>(this._array);
+            Temp.Length = this.Length;
+            return Temp;
         }  
 
         public IEnumerator<T> GetEnumerator()
@@ -153,9 +178,21 @@ namespace Task3
             return false;
         }
 
-        public bool Remove(T item) //Если у меня два или более одинаковых элемента в коллекции, метод Remove должен удалить их все или только первый нашедшийся?
+        //сделать
+        public T[] ToArray()
         {
-            throw new NotImplementedException();
+            return new T[1];
+        }
+
+        //доделать
+        public bool Remove(T item) //Если у меня два или более одинаковых элемента в коллекции, удаляю первый встретившийся
+        {
+            if (_array.Contains(item))
+            {
+
+            }
+
+            return false;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
