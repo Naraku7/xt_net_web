@@ -9,7 +9,7 @@ namespace Task3
 {
     class DynamicArray<T> : IEnumerable, IEnumerable<T>, ICloneable//, ICollection<T>, IList<T>
     {
-        private T[] _array;
+        protected T[] _array;
         private T[] _tempArr;     
 
         public DynamicArray()
@@ -32,31 +32,39 @@ namespace Task3
 
         public DynamicArray(IEnumerable<T> ie)
         {
-            _array = ie.ToArray(); //исправить, как ниже, если нельзя
+            //_array = ie.ToArray(); 
+
+            _array = new T[ie.Count()];
+
+            int Count = 0;
+
+            foreach (T item in ie)
+            {
+                _array[Count] = item;
+                Count++;
+            }
+
             Length = ie.Count();
         }
 
-        //В задании сказано выбросить ArgumentOutOfRangeException, поэтому пришлось сделать через try-catch
-        public T this[int index] //{ get => _array[index]; set => _array[index] = value; } 
+        
+        public T this[int index]
         {
             get
             {
-                try { return _array[index]; }
-
-                catch(IndexOutOfRangeException ex)
-                {
+                if (index > Length - 1)
                     throw new ArgumentOutOfRangeException();
-                }
-            }
+
+                return index >= 0 ? _array[index] : _array[Length + index];               
+        }
 
             set
             {
-                try { _array[index] = value; }
-
-                catch (IndexOutOfRangeException ex)
-                {
+                if (index > Length - 1)
                     throw new ArgumentOutOfRangeException();
-                }
+
+                if (index >= 0) _array[index] = value;
+                else _array[Length + index] = value;
             }
         }
 
@@ -67,15 +75,33 @@ namespace Task3
                 return _array.Length;
             }
 
-            set
-            {               
+            set 
+            {
+                _tempArr = _array;
                 _array = new T[value];
+
+                if (Length > value)
+                {
+                    Length = value;
+
+                    for (int i = 0; i < Length; i++)
+                    {
+                        _array[i] = _tempArr[i];
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < _tempArr.Length; i++)
+                    {                    
+                        _array[i] = _tempArr[i];
+                    }
+                }
             }
         }
 
-        public int Length { get; private set; }
+        public int Length { get; protected set; }
 
-        public void Add(T item) //в этом методе добавь увеличение Length и мб Capacity
+        public void Add(T item)
         {
            if (Length < Capacity)
             {
@@ -89,12 +115,11 @@ namespace Task3
 
                 _tempArr.CopyTo(_array, 0); //записываем старые элементы
                 _array[Length] = item; //записываем новый элемент.
-                Length++; //длина массива стала больше
-                
+                Length++; //длина массива стала больше               
             }
         }
 
-        public void AddRange(IEnumerable<T> collection) //в этом методе добавь увеличение Length и мб Capacity
+        public void AddRange(IEnumerable<T> collection) 
         {
             if (Length + collection.Count() <= Capacity)
             {
@@ -149,9 +174,54 @@ namespace Task3
 
         }
 
-        //сделать
         public bool Insert(int index, T item)
         {
+            if (index > Length - 1) 
+                throw new ArgumentOutOfRangeException("Index is out of range", "index");
+
+            int j = 0;
+
+            if(Length < Capacity)
+            {
+                _tempArr = new T[Length + 1];
+
+                for (int i = 0; i < _tempArr.Length; i++, j++)
+                {
+                    if (i == index)
+                    {
+                        _tempArr[i] = item;
+                        j--;
+                    }
+                    else _tempArr[i] = _array[j];
+                }
+
+                _array = _tempArr;
+                Length++;
+            }
+            else 
+            {
+                _tempArr = _array; //записываем наш массив во временный и создаем новый, емкостью в 2 раза больше
+                _array = new T[_tempArr.Length * 2];
+
+                _tempArr.CopyTo(_array, 0); //записываем старые элементы
+                
+                _tempArr = new T[Length + 1];
+
+                for (int i = 0; i < _tempArr.Length; i++, j++)
+                {
+                    if (i == index)
+                    {
+                        _tempArr[i] = item;
+                        j--;
+                    }
+                    else _tempArr[i] = _array[j];
+                }
+
+                _tempArr.CopyTo(_array, 0);
+
+                Length++; //длина массива стала больше
+            }
+
             return true;
         }
 
@@ -163,9 +233,24 @@ namespace Task3
             return Temp;
         }  
 
-        public IEnumerator<T> GetEnumerator()
+        public virtual IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Length; i++)
+            {
+                yield return _array[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            _tempArr = new T[Length];
+
+            for (int i = 0; i < Length; i++)
+            {
+                _tempArr[i] = _array[i];
+            }
+
+            return _tempArr.GetEnumerator(); 
         }
 
         public bool Contains(T item)
@@ -178,26 +263,56 @@ namespace Task3
             return false;
         }
 
-        //сделать
         public T[] ToArray()
         {
-            return new T[1];
-        }
+            _tempArr = new T[Length];
 
-        //доделать
-        public bool Remove(T item) //Если у меня два или более одинаковых элемента в коллекции, удаляю первый встретившийся
-        {
-            if (_array.Contains(item))
+            for (int i = 0; i < Length; i++)
             {
-
+                _tempArr = _array;
             }
 
+            return _tempArr;
+        }
+
+
+        public bool Remove(T item) //Если у меня два или более одинаковых элемента в коллекции, удаляю первый встретившийся
+        {
+            int j = 0;
+            int Index = 0;
+            int PreviousCapacity;
+
+            if (_array.Contains(item))
+            {
+                _tempArr = new T[Length];
+                PreviousCapacity = Capacity; //сохраняем предыдущее Capacity
+
+                for (int i = 0; i < _array.Length; i++)
+                {            
+                    if (_array[i].Equals(item))
+                    {                                            
+                        Index = i; //обнаружили первое вхождение и выходим из цикла
+                        break;
+                    }
+                }
+
+                //с помощью j, убрав элемент, сдвигаем все остальные элементы
+                for (int i = 0; i < Length; i++, j++)
+                {
+                    if (i != Index) _tempArr[j] = _array[i]; 
+                    else j--;
+                }
+              
+                _array = _tempArr; //записываем результат в _array
+                Length--;
+                Capacity = PreviousCapacity;
+
+                return true;
+            }
+            
             return false;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

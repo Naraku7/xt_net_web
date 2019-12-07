@@ -6,43 +6,62 @@ using System.Threading.Tasks;
 
 namespace LessoneTwoExample
 {
+
+
     class Program
     {
-        public delegate double MathFunction(double n1, double n2);
-
+        
         static void Main(string[] args)
         {
-            MathFunction func =  new MathFunction(Multiply);
+            Account acc = new Account(100);
+            acc.Notify += DisplayMessage;
+            acc.Notify -= DisplayMessage;
+            acc.Notify += new Account.AccountHandler(DisplayMessage);
 
-            DoSome(func);
+            acc.Notify += mes => Console.WriteLine(mes); 
 
-            func(3, 5);
-
-            func.Invoke(3,5);
-
-            Console.ReadLine();
+            Console.ReadKey();
         }
 
-        static double Multiply(double n1, double n2) => n1 * n2;
-
-        static void DoSome(MathFunction function)
+        private static void DisplayMessage(string message)
         {
-            var res = 0.0;
-            if(function != null)
-            //res = function(3, 5);
-            res = function.Invoke(3, 5);
-
-            Console.WriteLine(res);
+            Console.WriteLine(message);
         }
+
+
     }
 
-    public class Calculator
+    class Account
     {
+        public delegate void AccountHandler(string message);
+        public event AccountHandler Notify;
 
-
-        public Calculator()
+        public Account(int sum)
         {
-
+            Sum = sum;
+        }
+        // сумма на счете
+        public int Sum { get; private set; }
+        // добавление средств на счет
+        public void Put(int sum)
+        {
+            Sum += sum;
+            Notify?.Invoke($"На счет поступило: {sum}");
+        }
+        // списание средств со счета
+        public void Take(int sum)
+        {
+            if (Sum >= sum)
+            {
+                Sum -= sum;
+                Notify?.Invoke($"Со счета снято: {sum}");
+            }
+            else
+            {
+                Notify?.Invoke($"Недостаточно денег на счете.Текущий баланс: { Sum }");
+            }
         }
     }
+
+
 }

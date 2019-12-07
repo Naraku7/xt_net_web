@@ -18,8 +18,6 @@ namespace Task3
             //RemovePeople(people);
 
 
-
-
             //WordFrequency("Вот дом, Который построил Джек. " +
             //    "А это пшеница, Которая в тёмном чулане хранится " +
             //    "В доме, Который построил Джек. А это весёлая птица-синица, " +
@@ -27,32 +25,14 @@ namespace Task3
             //    "В доме, Который построил Джек. Вот кот, Который пугает и ловит синицу, " +
             //    "Которая часто ворует пшеницу, Которая в тёмном чулане хранится");
 
-            Stack<int> stack = new Stack<int>();
-            stack.Push(1);
-            stack.Push(2);
-            stack.Push(3);
 
-            DynamicArray<int> test = new DynamicArray<int>(stack);
-            Console.WriteLine("Начальный Capacity: " + test.Capacity);
-            Console.WriteLine("Начальный Length: " + test.Length);
-            test.Add(1);
-            Console.WriteLine("Length: " + test.Length);
-            Console.WriteLine("Capacity: " + test.Capacity);
-            test.Add(5);
-            test.Add(1);
-            test.Add(1);
-            Console.WriteLine("Length: " + test.Length);
-            Console.WriteLine("Capacity: " + test.Capacity);
-            test.AddRange(new int[100]);
-            Console.WriteLine("Length: " + test.Length);
-            Console.WriteLine("Capacity: " + test.Capacity);
+            CycledDynamicArray<int> cycle = new CycledDynamicArray<int>(new int[] { 1, 2, 3, 4, 5});
 
-            DynamicArray<int> test2 = test.Clone() as DynamicArray<int>;
-            Console.WriteLine("test2 Capacity " + test2.Capacity);
-            Console.WriteLine("test2 Length " + test2.Length);
-
-
-
+            foreach (var item in cycle)
+            {
+                Console.WriteLine(item);
+            }
+            
 
             Console.ReadKey();
 
