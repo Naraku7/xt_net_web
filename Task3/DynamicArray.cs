@@ -80,6 +80,9 @@ namespace Task3
                 _tempArr = _array;
                 _array = new T[value];
 
+
+                //Пришлось сделать таким образом, т.к. иначе вылетало исключение либо 
+                //в при Remove(), либо при изменении Capacity из вызывающего кода
                 if (Length > value)
                 {
                     Length = value;
