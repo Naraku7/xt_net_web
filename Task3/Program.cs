@@ -26,13 +26,16 @@ namespace Task3
             //    "Которая часто ворует пшеницу, Которая в тёмном чулане хранится");
 
 
-            CycledDynamicArray<int> cycle = new CycledDynamicArray<int>(new int[] { 1, 2, 3, 4, 5});
+            //CycledDynamicArray<int> cycle = new CycledDynamicArray<int>(new int[] { 1, 2, 3, 4, 5});
 
-            foreach (var item in cycle)
-            {
-                Console.WriteLine(item);
-            }
-            
+            //foreach (var item in cycle)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            DynamicArray<string> dyn = new DynamicArray<string>();
+
+            Console.WriteLine(dyn.Insert(1, null));
 
             Console.ReadKey();
 

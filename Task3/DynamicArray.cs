@@ -26,6 +26,9 @@ namespace Task3
 
         public DynamicArray(T[] array)
         {
+            if (array == null)
+                throw new ArgumentException("Null parameter", "item");
+
             _array = array;
             Length = array.Length;           
         }
@@ -33,6 +36,9 @@ namespace Task3
         public DynamicArray(IEnumerable<T> ie)
         {
             //_array = ie.ToArray(); 
+
+            if (ie == null)
+                throw new ArgumentException("Null parameter", "item");
 
             _array = new T[ie.Count()];
 
@@ -181,6 +187,9 @@ namespace Task3
         {
             if (index > Length - 1) 
                 throw new ArgumentOutOfRangeException("Index is out of range", "index");
+
+            if (item == null)
+                return false;
 
             int j = 0;
 
