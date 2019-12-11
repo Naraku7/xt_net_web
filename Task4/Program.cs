@@ -10,94 +10,76 @@ namespace Task4
     {
         static void Main(string[] args)
         {
-            int[] arr = new int[] { 0, 5, 10, 25, 44, 2, 6, 11, 89, 10002, 54, -2, 0, 5, 6, 26 };
-            int[] arr2 = new int[] { 1, 2, 3 };
 
-            Console.WriteLine(arr2.NumberArraySum());
+            //4.1, 4.4
+            #region
+            //int[] arr = new int[] { 0, 5, 10, 25, 44, 2, 6, 11, 89, 10002, 54, -2, 0, 5, 6, 26 };
+            //int[] arr2 = new int[] { 1, 2, 3 };
 
-            //CustomSort<int>(arr, Compare<int>);
+            //SortingHandler sortingHandler = new SortingHandler();
+            //Sorting<string> sortingString = new Sorting<string>();
+            //Sorting<int> sortingInt = new Sorting<int>();
+
+            //Sorting<int>.onCompare += SortingHandler.PrintFinish;
+
+            //4.4
+            //Console.WriteLine(arr2.NumberArraySum());
+
+            //sortingInt.CustomSort(arr, SortingHandler.Compare<int>);
 
             //foreach (var item in arr)
             //{
             //    Console.WriteLine(item);
             //}
+            #endregion
 
-           
 
+            //4.2
+            #region
             //string[] animals = new string[] { "deer", "zebra", "mouse", "boar", "dog", "cat", "elephant" };
 
-            //CustomSort<string>(animals, CompareString);
+            //Sorting<string>.onCompare += SortingHandler.PrintFinish;
+
+            //Sorting<string>.CustomSort(animals, SortingHandler.CompareString);
+
+            //Sorting<string>.onCompare -= SortingHandler.PrintFinish;
+
+
 
             //foreach (var item in animals)
             //{
             //    Console.WriteLine(item);
             //}
+            #endregion
+
+            #region
+            int[] arr = new int[] { 0, 5, 10, 25, 44, 2, 6, 11, 89, 10002, 54, -2, 0, 5, 6, 26 };
+            Sorting<int>.SortInThread(arr, SortingHandler.Compare<int>);
+            #endregion
 
             Console.ReadLine();
         }
 
-        #region
-        //4.1
-
-        public static void CustomSort<T>(T[] array, Comparison<T> comparison)
-        {
-            T temp;
-            bool sorted = false;
-
-            while (!sorted)
-            {
-                sorted = true;
-
-                for (int i = 0; i < array.Length - 1; i++)
-                {
-                    if (comparison(array[i], array[i + 1]) > 0)
-                    {
-                        temp = array[i];
-                        array[i] = array[i + 1];
-                        array[i + 1] = temp;
-                        sorted = false;
-                    }
-                }
-            }
-        }
-
-        public static int Compare<T>(T x, T y) where T : IComparable
-        {
-            if (x == null || y == null) return -1;
-
-            return x.CompareTo(y);
-        }
-        #endregion
+        
 
 
-        #region
-        //4.2
-        public static int CompareString(string s1, string s2) 
-            => s1.Length > s2.Length ? 1 : s1.Length == s2.Length ? string.Compare(s1, s2, true) : -1;
-
-        //No arrow function version is below
-
-        //{
-        //    if (s1.Length > s2.Length) return 1;
-        //    else if(s1.Length == s2.Length) return string.Compare(s1, s2, true);           
-
-        //    return -1;
-        //}
-
-        #endregion
+        
   
     }
 
-    #region
     //4.4
+    #region
 
     public static class NumberArrayExtension
     {
         public static int NumberArraySum(this int[] array)
         {
-            int sum = 0;
+            if (array == null)
+                throw new ArgumentNullException("array", "Your array cannot be empty or null");
 
-            for (int i = 0; i < array.Length; i++)
+            int sum = array[0];
+
+            for (int i = 1; i < array.Length; i++)
             {
                 sum += array[i];
             }

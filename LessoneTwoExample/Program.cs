@@ -18,6 +18,8 @@ namespace LessoneTwoExample
             acc.Notify -= DisplayMessage;
             acc.Notify += new Account.AccountHandler(DisplayMessage);
 
+            
+
             acc.Notify += mes => Console.WriteLine(mes); 
 
             Console.ReadKey();
@@ -31,7 +33,7 @@ namespace LessoneTwoExample
 
     }
 
-    class Account
+    class Account 
     {
         public delegate void AccountHandler(string message);
         public event AccountHandler Notify;
