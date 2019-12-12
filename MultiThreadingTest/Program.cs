@@ -5,31 +5,53 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-class Program
+namespace SemaphoreApp
 {
-    static void Main(string[] args)
+    class Program
     {
-        // создаем новый поток
-        Thread myThread = new Thread(new ThreadStart(Count));
-        myThread.Start(); // запускаем поток
-
-        for (int i = 1; i < 9; i++)
+        static void Main(string[] args)
         {
-            Console.WriteLine("Главный поток:");
-            Console.WriteLine(i * i);
-            Thread.Sleep(300);
-        }
+            for (int i = 1; i < 6; i++)
+            {
+                Reader reader = new Reader(i);
+            }
 
-        Console.ReadLine();
+            Console.ReadLine();
+        }
     }
 
-    public static void Count()
+    class Reader
     {
-        for (int i = 1; i < 9; i++)
+        // создаем семафор
+        static Semaphore sem = new Semaphore(3, 3);
+        Thread myThread;
+        int count = 3;// счетчик чтения
+
+        public Reader(int i)
         {
-            Console.WriteLine("Второй поток:");
-            Console.WriteLine(i * i);
-            Thread.Sleep(400);
+            myThread = new Thread(Read);
+            myThread.Name = $"Читатель {i.ToString()}";
+            myThread.Start();
+        }
+
+        public void Read()
+        {
+            while (count > 0)
+            {
+                sem.WaitOne();
+
+                Console.WriteLine($"{Thread.CurrentThread.Name} входит в библиотеку");
+
+                Console.WriteLine($"{Thread.CurrentThread.Name} читает");
+                Thread.Sleep(1000);
+
+                Console.WriteLine($"{Thread.CurrentThread.Name} покидает библиотеку");
+
+                sem.Release();
+
+                count--;
+                Thread.Sleep(1000);
+            }
         }
     }
 }

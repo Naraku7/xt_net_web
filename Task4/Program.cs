@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,18 +54,45 @@ namespace Task4
             #endregion
 
             #region
-            int[] arr = new int[] { 0, 5, 10, 25, 44, 2, 6, 11, 89, 10002, 54, -2, 0, 5, 6, 26 };
-            Sorting<int>.SortInThread(arr, SortingHandler.Compare<int>);
+            //int[] arr = new int[] { 0, 5, 10, 25, 44, 2, 6, 11, 89, 10002, 54, -2, 0, 5, 6, 26 };
+            //Sorting<int>.SortInThread(arr, SortingHandler.Compare<int>);
             #endregion
+
+            //4.5
+            #region
+            string test = "54";
+            Console.WriteLine(test.IsStringIntPositive());
+            #endregion
+
+            //4.6
+            #region
+            Random rnd = new Random();
+            int[] intArray = new int[600];
+
+            for (int i = 0; i < intArray.Length; i++)
+            {
+                intArray[i] = rnd.Next(-100, 100);
+            }
+
+            
+
+            Stopwatch stopWatch = new Stopwatch();
+
+            //1. метода, непосредственно реализующего поиск;
+            stopWatch.Start();
+            for (int i = 0; i < intArray.Length; i++)
+            {
+                Searching.SearchPositive(intArray[i]);
+            }
+            TimeSpan ts = stopWatch.Elapsed;
+
+            #endregion
+
 
             Console.ReadLine();
         }
 
-        
 
-
-        
-  
     }
 
     //4.4
@@ -89,5 +117,13 @@ namespace Task4
 
     }
 
+    #endregion
+
+    //4.5
+    #region
+    public static class StringExtension
+    {
+        public static bool IsStringIntPositive(this string s) => s.All(char.IsDigit);        
+    }
     #endregion
 }
