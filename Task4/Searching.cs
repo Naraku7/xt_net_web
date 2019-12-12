@@ -13,12 +13,13 @@ namespace Task4
             return x > 0;
         }
 
-        public static void SearchPosDel(int[] array, Predicate<int> predicate)
+        public static bool SearchPosDel(int[] array, Predicate<int> predicate)
         {
-            foreach (var item in array)
+            for (int i = 0; i < array.Length; i++)
             {
-                if (predicate(item)) Console.WriteLine(item);
+                return predicate(array[i]);
             }
+            return true; 
         }
     }
 }

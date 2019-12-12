@@ -60,31 +60,110 @@ namespace Task4
 
             //4.5
             #region
-            string test = "54";
-            Console.WriteLine(test.IsStringIntPositive());
+            //string test = "54";
+            //Console.WriteLine(test.IsStringIntPositive());
             #endregion
 
             //4.6
             #region
             Random rnd = new Random();
             int[] intArray = new int[600];
+            long[] time = new long[50];
 
             for (int i = 0; i < intArray.Length; i++)
             {
                 intArray[i] = rnd.Next(-100, 100);
             }
 
-            
-
             Stopwatch stopWatch = new Stopwatch();
 
             //1. метода, непосредственно реализующего поиск;
-            stopWatch.Start();
-            for (int i = 0; i < intArray.Length; i++)
+            
+
+            for (int k = 0; k < time.Length; k++)
             {
-                Searching.SearchPositive(intArray[i]);
+                stopWatch.Start();
+                for (int i = 0; i < intArray.Length; i++)
+                {
+                    Searching.SearchPositive(intArray[i]);
+                }
+                
+                stopWatch.Stop();
+                time[k] = stopWatch.ElapsedTicks;
+                //Console.WriteLine(stopWatch.ElapsedTicks);             
             }
-            TimeSpan ts = stopWatch.Elapsed;
+
+            Console.WriteLine("1. метод, непосредственно реализующий поиск");
+            FindMedianValue(time);
+
+            //2. метода, которому условие поиска передаётся через экземпляр делегата
+            
+            for (int k = 0; k < time.Length; k++)
+            {
+                stopWatch.Start();
+
+                Searching.SearchPosDel(intArray, Searching.SearchPositive);
+                
+                stopWatch.Stop();
+                time[k] = stopWatch.ElapsedTicks;
+                //Console.WriteLine(stopWatch.ElapsedTicks);
+            }
+
+            Console.WriteLine("2. метод, которому условие поиска передаётся через экземпляр делегата");
+            FindMedianValue(time);
+
+            //3. метод, которому условие поиска передаётся через делегат в виде анонимного метода;
+
+            for (int k = 0; k < time.Length; k++)
+            {
+                stopWatch.Start();
+
+                Searching.SearchPosDel(intArray, delegate(int x)
+                {
+                    return x > 0;
+                });
+
+                stopWatch.Stop();
+                time[k] = stopWatch.ElapsedTicks;
+                //Console.WriteLine(stopWatch.ElapsedTicks);
+            }
+
+            Console.WriteLine("3. метод, которому условие поиска передаётся через делегат в виде анонимного метода");
+            FindMedianValue(time);
+
+            //4. метод, которому условие поиска передаётся через делегат в виде лямбда-выражения;
+
+            for (int k = 0; k < time.Length; k++)
+            {
+                stopWatch.Start();
+
+                Searching.SearchPosDel(intArray, x => x > 0);
+
+                stopWatch.Stop();
+                time[k] = stopWatch.ElapsedTicks;
+                //Console.WriteLine(stopWatch.ElapsedTicks);
+            }
+
+            Console.WriteLine("4. метод, которому условие поиска передаётся через делегат в виде лямбда-выражения");
+            FindMedianValue(time);
+
+            //5. LINQ-выражение;
+
+            for (int k = 0; k < time.Length; k++)
+            {
+                stopWatch.Start();
+
+                Searching.SearchPosDel(intArray, x => x > 0);
+
+                var result = intArray.Where(x => x > 0).ToArray();
+
+                stopWatch.Stop();
+                time[k] = stopWatch.ElapsedTicks;
+                //Console.WriteLine(stopWatch.ElapsedTicks);
+            }
+
+            Console.WriteLine("5. LINQ-выражение");
+            FindMedianValue(time);
 
             #endregion
 
@@ -92,7 +171,12 @@ namespace Task4
             Console.ReadLine();
         }
 
+        public static void FindMedianValue(long[] arr)
+        {
+            Sorting<long>.CustomSort(arr, SortingHandler.Compare<long>);
 
+            Console.WriteLine("Median value: " + arr[arr.Length/2]);
+        }
     }
 
     //4.4
@@ -126,4 +210,5 @@ namespace Task4
         public static bool IsStringIntPositive(this string s) => s.All(char.IsDigit);        
     }
     #endregion
+
 }
