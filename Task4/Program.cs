@@ -21,7 +21,7 @@ namespace Task4
             //Sorting<string> sortingString = new Sorting<string>();
             //Sorting<int> sortingInt = new Sorting<int>();
 
-            
+
 
             ////4.4
             ////Console.WriteLine("arr2 NumberArraySum" + arr2.NumberArraySum());

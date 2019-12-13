@@ -16,17 +16,28 @@ namespace Task4
         }
 
         //4.2
+        //public static int CompareString(string s1, string s2)
+        //    => s1.Length > s2.Length ? 1 : s1.Length == s2.Length ? string.Compare(s1, s2, true) : -1;
+
         public static int CompareString(string s1, string s2)
-            => s1.Length > s2.Length ? 1 : s1.Length == s2.Length ? string.Compare(s1, s2, true) : -1;
+        {
+            if (s1 == null || s2 == null)
+                throw new ArgumentNullException();
 
-        //No arrow function version is below
+            if (s1.Length > s2.Length) return 1;
 
-        //{
-        //    if (s1.Length > s2.Length) return 1;
-        //    else if(s1.Length == s2.Length) return string.Compare(s1, s2, true);           
-
-        //    return -1;
-        //}
+            if (s1.Length == s2.Length)
+            {
+                //The length of both strings will be the same here
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] > s2[i]) return 1;
+                    else if (s1[i] < s2[i]) return -1;
+                }
+            }
+           
+            return -1;
+        }
 
         public static void PrintFinish() => Console.WriteLine("Sorting is finished");
     }
