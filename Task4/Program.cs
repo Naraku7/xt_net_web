@@ -14,24 +14,27 @@ namespace Task4
 
             //4.1, 4.4
             #region
-            //int[] arr = new int[] { 0, 5, 10, 25, 44, 2, 6, 11, 89, 10002, 54, -2, 0, 5, 6, 26 };
-            //int[] arr2 = new int[] { 1, 2, 3 };
+            int[] arr = new int[] { 0, 5, 10, 25, 44, 2, 6, 11, 89, 10002, 54, -2, 0, 5, 6, 26 };
+            int[] arr2 = new int[] { 1, 2, 3 };
 
-            //SortingHandler sortingHandler = new SortingHandler();
-            //Sorting<string> sortingString = new Sorting<string>();
-            //Sorting<int> sortingInt = new Sorting<int>();
+            SortingHandler sortingHandler = new SortingHandler();
+            Sorting<string> sortingString = new Sorting<string>();
+            Sorting<int> sortingInt = new Sorting<int>();
 
-            //Sorting<int>.onCompare += SortingHandler.PrintFinish;
+            Sorting<int>.onCompare += SortingHandler.PrintFinish;
 
             //4.4
-            //Console.WriteLine(arr2.NumberArraySum());
+            Console.WriteLine(arr2.NumberArraySum());
 
-            //sortingInt.CustomSort(arr, SortingHandler.Compare<int>);
+            Sorting<int>.CustomSort(arr, SortingHandler.Compare<int>);
 
-            //foreach (var item in arr)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            foreach (var item in arr)
+            {
+                Console.WriteLine(item);
+            }
+
+            int[] arr3 = arr;
+            Sorting<int>.SortInThread(arr3, SortingHandler.Compare<int>);
             #endregion
 
 
@@ -53,10 +56,7 @@ namespace Task4
             //}
             #endregion
 
-            #region
-            //int[] arr = new int[] { 0, 5, 10, 25, 44, 2, 6, 11, 89, 10002, 54, -2, 0, 5, 6, 26 };
-            //Sorting<int>.SortInThread(arr, SortingHandler.Compare<int>);
-            #endregion
+
 
             //4.5
             #region
