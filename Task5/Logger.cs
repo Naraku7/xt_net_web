@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace Task5
 {
-    //Для всех текстовых файлов (*.txt), находящихся в этой папке или вложенных подпапках,
-    //реализовать сохранение истории изменений с возможностью отката состояния к любому моменту.
     class Logger
     {
         FileSystemWatcher watcher;
@@ -18,141 +16,56 @@ namespace Task5
         string sourceDir;
         string logDir = @"E:\Studying\EPAM_Task5_logs\";
 
-        public Logger()
+        public Logger(string sourceDir)
         {
-            sourceDir = @"E:\Studying\EPAM_Task5_Files";
-            watcher = new FileSystemWatcher(sourceDir, "*txt");
-            //watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime; //нужно ли?
-
-            watcher.NotifyFilter = NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.DirectoryName
-                                 | NotifyFilters.CreationTime;
-
-
-            // Add event handlers.
-            watcher.Deleted += OnDeleted;
-            watcher.Created += OnCreated;
-            watcher.Changed += OnChanged;
-            watcher.Renamed += OnRenamed;
+            this.sourceDir = sourceDir;            
         }
 
         public void Start()
         {
-            // Begin watching.
-            watcher.EnableRaisingEvents = true;
-            while (enabled)
+            using (watcher = new FileSystemWatcher(sourceDir, "*.*"))
             {
-                Thread.Sleep(1000);
+                watcher.NotifyFilter = NotifyFilters.LastAccess
+                                   | NotifyFilters.LastWrite
+                                   | NotifyFilters.FileName
+                                   | NotifyFilters.DirectoryName
+                                   | NotifyFilters.CreationTime;
+                watcher.IncludeSubdirectories = true;
+
+                // Add event handlers.
+                watcher.Deleted += OnHandler;
+                watcher.Created += OnHandler;
+                watcher.Changed += OnHandler;
+                watcher.Renamed += OnHandler;
+
+                // Begin watching.
+                watcher.EnableRaisingEvents = true;
+
+                while (enabled)
+                {
+                    Thread.Sleep(1000);
+                }
             }
         }
-        public void Stop()
-        {
-            // End watching.
-            watcher.EnableRaisingEvents = false;
-            enabled = false;
-        }
+        //public void Stop()
+        //{
+        //    // End watching.
+        //    watcher.EnableRaisingEvents = false;
+        //    enabled = false;
+        //}
 
-        private void OnDeleted(object sender, FileSystemEventArgs e)
+
+        private void OnHandler(object sender, FileSystemEventArgs e)
         {          
-            DateTime date = DateTime.Now;
-         
-            string newDir = logDir + date.Day + "."
-                    + date.Month + "." + date.Year + "_" + date.Hour + "h"
-                    + date.Minute + "m" + date.Second + "s";
-
-            DirectoryCopy(sourceDir, newDir, true);     
-        }
-
-        private void OnCreated(object sender, FileSystemEventArgs e)
-        {
-            DateTime date = DateTime.Now;
-
-            string newDir = logDir + date.Day + "."
-                    + date.Month + "." + date.Year + "_" + date.Hour + "h"
-                    + date.Minute + "m" + date.Second + "s";
-
-            DirectoryCopy(sourceDir, newDir, true);
-        }
-
-        private void OnChanged(object sender, FileSystemEventArgs e)
-        {
-            DateTime date = DateTime.Now;
-
-            string newDir = logDir + date.Day + "."
-                    + date.Month + "." + date.Year + "_" + date.Hour + "h"
-                    + date.Minute + "m" + date.Second + "s";
-
-            DirectoryCopy(sourceDir, newDir, true);
-        }
-
-        private void OnRenamed(object sender, FileSystemEventArgs e)
-        {
           DateTime date = DateTime.Now;
 
             string newDir = logDir + date.Day + "."
                     + date.Month + "." + date.Year + "_" + date.Hour + "h"
                     + date.Minute + "m" + date.Second + "s";
 
-            DirectoryCopy(sourceDir, newDir, true);
+            Program.DirectoryCopy(sourceDir, newDir, true);
         }
 
-        //private void RecordEntry(string fileEvent, string filePath)
-        //{
-        //    lock (obj)
-        //    {
-
-
-        //        ////по идее тут нужен FSW? Или еще где-то?
-        //        //using (StreamWriter writer = new StreamWriter(@"E:\Studying\EPAM_Task5_logs\log.txt", true)) //стоит убрать writer и сделать копирование файлов?
-        //        //{
-        //        //    //writer.WriteLine(String.Format("{0} file {1} was {2}",
-        //        //    //    DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), filePath, fileEvent));
-        //        //    //writer.Flush();
-        //        //}
-        //    }
-        //}
-
-        public static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
-        {
-            // Get the subdirectories for the specified directory.
-            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
-
-            if (!dir.Exists)
-            {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceDirName);
-            }
-
-            DirectoryInfo[] dirs = dir.GetDirectories();
-            // If the destination directory doesn't exist, create it.
-            if (!Directory.Exists(destDirName))
-            {
-                Directory.CreateDirectory(destDirName);
-            }
-
-            // Get the files in the directory and copy them to the new location.
-            FileInfo[] files = dir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string temppath = Path.Combine(destDirName, file.Name);
-                // Overwrite the files in the destination directory 
-                file.CopyTo(temppath, true);
-            }
-
-            // If copying subdirectories, copy them and their contents to new location.
-            if (copySubDirs)
-            {
-                foreach (DirectoryInfo subdir in dirs)
-                {
-                    string temppath = Path.Combine(destDirName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
-                }
-            }
-        }
-
-
+       
     }
 }
