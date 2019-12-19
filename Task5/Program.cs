@@ -11,6 +11,7 @@ namespace Task5
     class Program
     {
         //вынести потом это в отдельные методы
+        //Может, из класса Logger все тоже сюда. И FSW надо в using
         static void Main(string[] args)
         {
             int input;
@@ -27,16 +28,14 @@ namespace Task5
 
             
             if (input == 1)
-            {
-                //Create a log when we start working ??
+            {               
                 DateTime date = DateTime.Now;
                 string logFolder = @"E:\Studying\EPAM_Task5_logs\" + date.Day + "." 
                     + date.Month + "." + date.Year + "_" + date.Hour + "h" 
                     + date.Minute + "m" + date.Second + "s";
-                
-                Directory.CreateDirectory(logFolder);
 
                 Logger logger = new Logger();
+                logger.Start();
             }
             else if (input == 2)
             {
@@ -82,28 +81,7 @@ namespace Task5
                         string fileName; 
                         string destFile;
 
-                        //по идее, Logger.DirectoryCopy() копирует и файлы тоже
-
-                        //if (Directory.Exists(logDirectory.ToString()))
-                        //{
-                        //    string[] files = Directory.GetFiles(logDirectory.ToString(), "*.txt");
-
-                        //    // Copy the files and overwrite destination files if they already exist.
-                        //    foreach (string s in files)
-                        //    {
-                        //        // Use static Path methods to extract only the file name from the path.
-                        //        fileName = Path.GetFileName(s);
-                        //        destFile = Path.Combine(filesDir, fileName);
-                        //       File.Copy(s, destFile, true);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    Console.WriteLine("Source path does not exist!");
-                        //}
-
-
-                        Logger.DirectoryCopy(logDirectory.ToString(), @"E:\Studying\EPAM_Task5_Files\", true);
+                       Logger.DirectoryCopy(logDirectory.ToString(), @"E:\Studying\EPAM_Task5_Files\", true);
                     }
                     else //это почему-то никогда не срабатывает
                     {

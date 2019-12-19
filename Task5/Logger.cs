@@ -22,12 +22,20 @@ namespace Task5
         {
             sourceDir = @"E:\Studying\EPAM_Task5_Files";
             watcher = new FileSystemWatcher(sourceDir, "*txt");
-            watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime; //нужно ли?
+            //watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime; //нужно ли?
+
+            watcher.NotifyFilter = NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.DirectoryName
+                                 | NotifyFilters.CreationTime;
+
 
             // Add event handlers.
             watcher.Deleted += OnDeleted;
             watcher.Created += OnCreated;
             watcher.Changed += OnChanged;
+            watcher.Renamed += OnRenamed;
         }
 
         public void Start()
@@ -47,57 +55,47 @@ namespace Task5
         }
 
         private void OnDeleted(object sender, FileSystemEventArgs e)
-        {
-            //string fileEvent = "deleted";
-            //string filePath = e.FullPath;
-            //File.Delete(filePath);
-            //RecordEntry(fileEvent, filePath);
-            //DirectoryCopy(sourceDir, logDir, true);
+        {          
+            DateTime date = DateTime.Now;
+         
+            string newDir = logDir + date.Day + "."
+                    + date.Month + "." + date.Year + "_" + date.Hour + "h"
+                    + date.Minute + "m" + date.Second + "s";
 
-            Thread th = new Thread(() =>
-            {
-                DirectoryCopy(sourceDir, logDir, true);
-            });
-
-            th.Start();
-
-            th.Abort();
-
+            DirectoryCopy(sourceDir, newDir, true);     
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
-            //string fileEvent = "created";
-            //string filePath = e.FullPath;
-            //RecordEntry(fileEvent, filePath);
-            //DirectoryCopy(sourceDir, logDir, true);
+            DateTime date = DateTime.Now;
 
-            Thread th = new Thread(() =>
-           {
-               DirectoryCopy(sourceDir, logDir, true);
-           });
+            string newDir = logDir + date.Day + "."
+                    + date.Month + "." + date.Year + "_" + date.Hour + "h"
+                    + date.Minute + "m" + date.Second + "s";
 
-            th.Start();
-            
-            th.Abort(); //нужно ли?
-            
+            DirectoryCopy(sourceDir, newDir, true);
         }
 
         private void OnChanged(object sender, FileSystemEventArgs e)
         {
-            //string fileEvent = "created";
-            //string filePath = e.FullPath;
-            //RecordEntry(fileEvent, filePath);
-            //DirectoryCopy(sourceDir, logDir, true);
+            DateTime date = DateTime.Now;
 
-            Thread th = new Thread(() =>
-            {
-                DirectoryCopy(sourceDir, logDir, true);
-            });
+            string newDir = logDir + date.Day + "."
+                    + date.Month + "." + date.Year + "_" + date.Hour + "h"
+                    + date.Minute + "m" + date.Second + "s";
 
-            th.Start();
+            DirectoryCopy(sourceDir, newDir, true);
+        }
 
-            th.Abort(); 
+        private void OnRenamed(object sender, FileSystemEventArgs e)
+        {
+          DateTime date = DateTime.Now;
+
+            string newDir = logDir + date.Day + "."
+                    + date.Month + "." + date.Year + "_" + date.Hour + "h"
+                    + date.Minute + "m" + date.Second + "s";
+
+            DirectoryCopy(sourceDir, newDir, true);
         }
 
         //private void RecordEntry(string fileEvent, string filePath)
