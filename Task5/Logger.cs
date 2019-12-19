@@ -10,26 +10,27 @@ namespace Task5
 {
     class Logger
     {
-        FileSystemWatcher watcher;
-        object obj = new object();
+        FileSystemWatcher watcher;    
         bool enabled = true;
         string sourceDir;
-        string logDir = @"E:\Studying\EPAM_Task5_logs\";
+        string logDir;
 
-        public Logger(string sourceDir)
+        public Logger(string sourceDir, string logDir)
         {
-            this.sourceDir = sourceDir;            
+            this.sourceDir = sourceDir;
+            this.logDir = logDir;
         }
 
         public void Start()
         {
-            using (watcher = new FileSystemWatcher(sourceDir, "*.*"))
+            using (watcher = new FileSystemWatcher(sourceDir, "*.txt*"))
             {
                 watcher.NotifyFilter = NotifyFilters.LastAccess
                                    | NotifyFilters.LastWrite
                                    | NotifyFilters.FileName
                                    | NotifyFilters.DirectoryName
                                    | NotifyFilters.CreationTime;
+
                 watcher.IncludeSubdirectories = true;
 
                 // Add event handlers.
@@ -47,13 +48,6 @@ namespace Task5
                 }
             }
         }
-        //public void Stop()
-        //{
-        //    // End watching.
-        //    watcher.EnableRaisingEvents = false;
-        //    enabled = false;
-        //}
-
 
         private void OnHandler(object sender, FileSystemEventArgs e)
         {          

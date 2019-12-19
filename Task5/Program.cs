@@ -43,7 +43,7 @@ namespace Task5
                     + date.Month + "." + date.Year + "_" + date.Hour + "h"
                     + date.Minute + "m" + date.Second + "s";
 
-                Logger logger = new Logger(WorkDir);
+                Logger logger = new Logger(WorkDir, logDir);
                 logger.Start();
             }
             else if (input == 2)
