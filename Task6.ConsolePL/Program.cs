@@ -65,38 +65,41 @@ namespace Task6.ConsolePL
             }
             else if (input == 2)
             {
-                Console.WriteLine("Please insert the information about the user you want to create");
-                Console.WriteLine("Insert name:");
-                
-                var name = Console.ReadLine();
-                bool correctName = false;
-                
-                while (!correctName)
+                while (true)
                 {
-                    if (name.Trim().Length < 1)
+                    Console.WriteLine("Please insert the information about the user you want to create");
+                    Console.WriteLine("Insert name:");
+
+                    var name = Console.ReadLine();
+                    bool correctName = false;
+
+                    while (!correctName)
                     {
-                        Console.WriteLine("Name cannot be empty, try again");
-                        name = Console.ReadLine();
+                        if (name.Trim().Length < 1)
+                        {
+                            Console.WriteLine("Name cannot be empty, try again");
+                            name = Console.ReadLine();
+                        }
+                        else
+                        {
+                            correctName = true;
+                        }
                     }
-                    else
+
+
+                    Console.WriteLine("Insert date of birth ");
+                    Console.WriteLine("Your input must be in format day.month.year");
+
+                    DateTime birthdate;
+
+                    while (!DateTime.TryParse(Console.ReadLine(), out birthdate))
                     {
-                        correctName = true;
+                        Console.WriteLine("Incorrect input of date");
+                        Console.WriteLine("Try again");
                     }
+
+                    logic.AddUser(new User(name, birthdate));
                 }
-                
-
-                Console.WriteLine("Insert date of birth ");
-                Console.WriteLine("Your input must be in format day.month.year");
-
-                DateTime birthdate;
-
-                while (!DateTime.TryParse(Console.ReadLine(), out birthdate))
-                {
-                    Console.WriteLine("Incorrect input of date");
-                    Console.WriteLine("Try again");
-                }
-
-                logic.AddUser(new User(name, birthdate));
 
             }
 
@@ -117,7 +120,25 @@ namespace Task6.ConsolePL
 
             else if (input == 4)
             {
-                Console.WriteLine("");
+                Console.WriteLine("Insert id of the user you want the award to be added to");
+
+                int userId;
+
+                while (!Int32.TryParse(Console.ReadLine(), out userId))
+                {
+                    Console.WriteLine("Incorrect input of user id");
+                    Console.WriteLine("Try again");
+                }
+
+                Console.WriteLine("Insert the title of the award");
+
+                var title = Console.ReadLine();
+
+                //fix the id here
+
+                Award award = new Award(1, title);
+
+                logic.AddAward(userId, award);
             }
         }
 

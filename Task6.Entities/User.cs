@@ -14,9 +14,6 @@ namespace Task6.Entities
         public int Age { get; set; }
         public List<Award> awards;
 
-        //if we delete one award, id will be counted further
-        public int CommonAmountOfAwards = 0;
-
         public User(string name, DateTime birthdate)
         {
             Name = name;

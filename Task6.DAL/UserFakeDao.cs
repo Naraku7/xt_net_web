@@ -42,9 +42,9 @@ namespace Task6.DAL
         {
             _users.TryGetValue(userId, out var user);
 
-            user.CommonAmountOfAwards++;
+            //user.CommonAmountOfAwards++;
 
-            award.Id = user.CommonAmountOfAwards;
+            //award.Id = user.CommonAmountOfAwards;
 
             user.awards.Add(award);
 

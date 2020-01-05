@@ -12,85 +12,156 @@ using Task6.Entities;
 namespace Task6.DAL
 {
     /// <summary>
-    /// DAO for Users stored in .json files.
+    /// DAO for Users stored in json.
     /// </summary>
     public class UserJSONFileDao : IUserDao
     {
-        public string UsersDirectory { get; private set; } = @"E:\Studying\EPAM_Task6_Users\";
+        private static readonly Dictionary<int, User> _users = new Dictionary<int, User>();
 
+        public string UsersFile { get; private set; } = @"E:\Studying\EPAM_Task6_Users\Users.txt";
+
+        //NRE + deletes all users
         public Award AddAward(int userId, Award award)
         {
-            string[] files = Directory.GetFiles(UsersDirectory);
-            string fileWithUserId = null;
-            string json = "";
-            User user = null;
+            string line = null;
+            User user;
+            List<User> users = new List<User>();
 
-            //getting user with userId
-            foreach (var file in files)
+            try
             {
-                if (file.EndsWith("userId.txt"))
-                    fileWithUserId = file;
-            }
-
-            if (fileWithUserId == null)
-            {
-                Console.WriteLine("There is no user with such ID");
-            }
-            else
-            {
-                try
+                using (StreamReader reader = new StreamReader(UsersFile))
                 {
-                    using (StreamReader reader = new StreamReader(UsersDirectory + fileWithUserId))
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        json = reader.ReadToEnd();
+                        user = JsonConvert.DeserializeObject<User>(line);
+
+                        users.Add(user);
+                    }
+
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(UsersFile))
+                {
+                    foreach (var item in users)
+                    {
+                        if (item.Id == userId)
+                        {
+                            item.awards.Add(award); //NRE 
+                        }
+
+                        writer.WriteLine(JsonConvert.SerializeObject(item));
                     }
                 }
-                catch (IOException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-
-                user = JsonConvert.DeserializeObject<User>(json);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
             }
 
-            user.CommonAmountOfAwards++;
 
-            award.Id = user.CommonAmountOfAwards;
+            //try
+            //{
+            //    using (StreamReader reader = new StreamReader(UsersFile))
+            //    {
+            //        using (StreamWriter writer = new StreamWriter(UsersFile))
+            //        {
+            //            while ((line = reader.ReadLine()) != null)
+            //            {
+            //                user = JsonConvert.DeserializeObject<User>(line);
 
-            user.awards.Add(award);
-
-            //Serializing back to json
-            AddUser(user);
+            //                if (user.Id == userId)
+            //                {
+            //                    user.awards.Add(award);
+            //                }
+            //                writer.WriteLine(JsonConvert.SerializeObject(user));
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (IOException e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
 
             return award;
         }
 
+        //TODO: make id work the right way
         public User AddUser(User user)
         {
-            string[] files = Directory.GetFiles(UsersDirectory);
-            int[] ids = new int[files.Length];
-
-            Regex regex = new Regex(@"*id*");
-
-            for (int i = 0; i < files.Length; i++)
-            {
-                files[i] = files[i].Substring(files[i].Length - 4);
-            }
-
-            var lastId = 1;
+            var lastId = _users.Keys.Count > 0
+                ? _users.Keys.Max() : 0;
 
             user.Id = lastId + 1;
 
-            //problems with ID
-            string filePath = UsersDirectory + user.Name + "_id" + user.Id + ".txt";
+            _users.Add(user.Id, user);
 
             string json = JsonConvert.SerializeObject(user);
 
             try
             {
-                using (StreamWriter writer = new StreamWriter(filePath))
+                using (StreamWriter writer = new StreamWriter(UsersFile, true))
                 {
-                    writer.Write(json);
+                    writer.WriteLine(json);
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return user;
+        }
+        public IEnumerable<User> GetAll()
+        {
+            string user = "";
+            List<User> users = new List<User>();
+
+            try
+            {
+                using (StreamReader reader = new StreamReader(UsersFile))
+                {
+                    while ((user = reader.ReadLine()) != null)
+                    {
+                        users.Add(JsonConvert.DeserializeObject<User>(user));
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            } 
+            
+            return users;
+        }
+
+        public User GetById(int id)
+        {
+            string line = "";
+            User user = null;
+
+            try
+            {
+                using (StreamReader reader = new StreamReader(UsersFile))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        user = JsonConvert.DeserializeObject<User>(line);
+                        
+                        if(user.Id == id)
+                        {
+                            return user;
+                        }
+                    }
+
+                    Console.WriteLine("There is no user with id {0}", id);
                 }
             }
             catch (IOException e)
@@ -101,42 +172,6 @@ namespace Task6.DAL
             return user;
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            string[] files = Directory.GetFiles(UsersDirectory);
-            string[] jsons = new string[files.Length];
-
-            for (int i = 0; i < jsons.Length; i++)
-            {
-                try
-                {
-                    using (StreamReader reader = new StreamReader(files[i]))
-                    {
-                        jsons[i] = reader.ReadToEnd();
-                    }
-                }
-                catch (IOException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-           
-
-            User[] users = new User[files.Length];
-
-            for (int i = 0; i < users.Length; i++)
-            {
-                users[i] = JsonConvert.DeserializeObject<User>(jsons[i]);
-            }
-            
-            return users;
-        }
-
-        public User GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         //public void RemoveAward(int userId, int awardId)
         //{
         //    throw new NotImplementedException();
@@ -144,7 +179,47 @@ namespace Task6.DAL
 
         public void RemoveUser(int id)
         {
-            throw new NotImplementedException();
+            string line = null;
+            User user;
+            List<User> users = new List<User>();
+
+            try
+            {
+                using (StreamReader reader = new StreamReader(UsersFile))
+                {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            user = JsonConvert.DeserializeObject<User>(line);
+
+                            users.Add(user);
+                        }
+                     
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(UsersFile))
+                {
+                    foreach (var item in users)
+                    {
+                        if (item.Id == id)
+                        {
+                            continue;
+                        }
+
+                        writer.WriteLine(JsonConvert.SerializeObject(item));
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
