@@ -134,9 +134,7 @@ namespace Task6.ConsolePL
 
                 var title = Console.ReadLine();
 
-                //fix the id here
-
-                Award award = new Award(1, title);
+                Award award = new Award(title);
 
                 logic.AddAward(userId, award);
             }

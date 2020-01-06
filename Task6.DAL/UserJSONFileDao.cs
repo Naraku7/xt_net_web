@@ -19,14 +19,14 @@ namespace Task6.DAL
         private static readonly Dictionary<int, User> _users = new Dictionary<int, User>();
 
         public string UsersFile { get; private set; } = @"E:\Studying\EPAM_Task6_Users\Users.txt";
-
-        //NRE + deletes all users
+    
         public Award AddAward(int userId, Award award)
         {
             string line = null;
             User user;
             List<User> users = new List<User>();
 
+            //reading the file and getting the list of users
             try
             {
                 using (StreamReader reader = new StreamReader(UsersFile))
@@ -45,18 +45,20 @@ namespace Task6.DAL
                 Console.WriteLine(e.Message);
             }
 
+            //writing the users back to file with the award added
             try
             {
                 using (StreamWriter writer = new StreamWriter(UsersFile))
                 {
-                    foreach (var item in users)
+                    for (int i = 0; i < users.Count; i++)
                     {
-                        if (item.Id == userId)
+                        if (users[i].Id == userId)
                         {
-                            item.awards.Add(award); //NRE 
+                            award.Id = users[i].awards.Count + 1;
+                            users[i].awards.Add(award);                       
                         }
 
-                        writer.WriteLine(JsonConvert.SerializeObject(item));
+                        writer.WriteLine(JsonConvert.SerializeObject(users[i]));
                     }
                 }
             }
@@ -64,31 +66,6 @@ namespace Task6.DAL
             {
                 Console.WriteLine(e.Message);
             }
-
-
-            //try
-            //{
-            //    using (StreamReader reader = new StreamReader(UsersFile))
-            //    {
-            //        using (StreamWriter writer = new StreamWriter(UsersFile))
-            //        {
-            //            while ((line = reader.ReadLine()) != null)
-            //            {
-            //                user = JsonConvert.DeserializeObject<User>(line);
-
-            //                if (user.Id == userId)
-            //                {
-            //                    user.awards.Add(award);
-            //                }
-            //                writer.WriteLine(JsonConvert.SerializeObject(user));
-            //            }
-            //        }
-            //    }
-            //}
-            //catch (IOException e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
 
             return award;
         }
@@ -183,6 +160,7 @@ namespace Task6.DAL
             User user;
             List<User> users = new List<User>();
 
+            //reading the file and getting the list of users
             try
             {
                 using (StreamReader reader = new StreamReader(UsersFile))
@@ -201,6 +179,7 @@ namespace Task6.DAL
                 Console.WriteLine(e.Message);
             }
 
+            //writing all users back except of the user we want to delete
             try
             {
                 using (StreamWriter writer = new StreamWriter(UsersFile))

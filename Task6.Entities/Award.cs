@@ -11,9 +11,8 @@ namespace Task6.Entities
         public int Id { get; set; }
         public string Title { get; }
 
-        public Award(int id, string title)
-        {
-            Id = id;
+        public Award(string title)
+        {     
             Title = title;
         }
         public Award() { }

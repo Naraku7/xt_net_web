@@ -18,6 +18,7 @@ namespace Task6.Entities
         {
             Name = name;
             DateOfBirth = birthdate;
+            awards = new List<Award>();
 
             Age = DateTime.Today.Year - birthdate.Year;
             // Go back to the year the person was born in case of a leap year
