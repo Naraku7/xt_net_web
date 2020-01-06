@@ -14,7 +14,8 @@ namespace Task6.ConsolePL
     {
         static void Main(string[] args)
         {
-            var logic = DependencyResolver.UserLogic;
+            var userLogic = DependencyResolver.UserLogic;
+            var awardLogic = DependencyResolver.AwardLogic;
             //var dao = DependencyResolver.UserDao;
             
             //var current = logic.AddUser(new User("Eugene", new DateTime(1993,02,03)));
@@ -32,7 +33,7 @@ namespace Task6.ConsolePL
             ParseInput(out input);
 
             Program program = new Program();
-            program.ChooseMode(input, logic);
+            program.ChooseMode(input, userLogic, awardLogic);
 
             Console.ReadLine();
         }
@@ -43,21 +44,22 @@ namespace Task6.ConsolePL
             Console.WriteLine("1. Watch the list of users");
             Console.WriteLine("2. Create");
             Console.WriteLine("3. Delete");
-            Console.WriteLine("4. Add Award");
+            Console.WriteLine("4. Add award to user");
+            Console.WriteLine("5. Create an award");
 
-            while (!(Int32.TryParse(Console.ReadLine(), out input) && (input > 0 && input < 5)))
+            while (!(Int32.TryParse(Console.ReadLine(), out input) && (input > 0 && input < 6)))
             {
                 Console.WriteLine("Incorrect input");
                 Console.WriteLine("Try again");
             }       
         }
 
-        private void ChooseMode(int input, IUserLogic logic)
+        private void ChooseMode(int input, IUserLogic userLogic, IAwardLogic awardLogic)
         {
             if (input == 1)
             {
                 Console.WriteLine("The list of users");
-                foreach (var item in logic.GetAll())
+                foreach (var item in userLogic.GetAll())
                 {
                     Console.WriteLine(item);
                 }
@@ -98,7 +100,7 @@ namespace Task6.ConsolePL
                         Console.WriteLine("Try again");
                     }
 
-                    logic.AddUser(new User(name, birthdate));
+                    userLogic.AddUser(new User(name, birthdate));
                 }
 
             }
@@ -115,7 +117,7 @@ namespace Task6.ConsolePL
                     Console.WriteLine("Try again");
                 }
 
-                logic.RemoveUser(id);
+                userLogic.RemoveUser(id);
             }
 
             else if (input == 4)
@@ -130,14 +132,28 @@ namespace Task6.ConsolePL
                     Console.WriteLine("Try again");
                 }
 
+                Console.WriteLine("Insert id of the award");
+
+                int awardId;
+
+                while (!Int32.TryParse(Console.ReadLine(), out awardId))
+                {
+                    Console.WriteLine("Incorrect input of user id");
+                    Console.WriteLine("Try again");
+                }
+
+                userLogic.AddAward(userId, awardId);
+            }
+            else if (input == 5)
+            {
                 Console.WriteLine("Insert the title of the award");
 
                 var title = Console.ReadLine();
-
                 Award award = new Award(title);
-
-                logic.AddAward(userId, award);
+                
+                awardLogic.CreateAward(award);
             }
+
         }
 
         //private void Continue(int input, IUserLogic logic)

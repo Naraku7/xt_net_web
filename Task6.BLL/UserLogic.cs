@@ -35,9 +35,9 @@ namespace Task6.BLL
             _userDao.RemoveUser(id);
         }
 
-        public Award AddAward(int userId, Award award)
+        public Award AddAward(int userId, int awardId)
         {
-           return _userDao.AddAward(userId, award);
+           return _userDao.AddAward(userId, awardId);
         }
 
         //public void RemoveAward(int userId, int awardId)

@@ -19,14 +19,17 @@ namespace Task6.DAL
         private static readonly Dictionary<int, User> _users = new Dictionary<int, User>();
 
         public string UsersFile { get; private set; } = @"E:\Studying\EPAM_Task6_Users\Users.txt";
-    
-        public Award AddAward(int userId, Award award)
+        public string AwardsFile { get; private set; } = @"E:\Studying\EPAM_Task6_Awards\Awards.txt";
+
+        //null instead of title 
+        public Award AddAward(int userId, int awardId)
         {
             string line = null;
             User user;
+            Award award = null;
             List<User> users = new List<User>();
 
-            //reading the file and getting the list of users
+            //reading the file with users and getting the list of users
             try
             {
                 using (StreamReader reader = new StreamReader(UsersFile))
@@ -37,7 +40,34 @@ namespace Task6.DAL
 
                         users.Add(user);
                     }
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
+            //reading the file with awards and getting the one we need
+            try
+            {
+                using (StreamReader reader = new StreamReader(AwardsFile))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {                       
+                        award = JsonConvert.DeserializeObject<Award>(line);
+                        
+                        if (award.Id == awardId)
+                        {
+                            for (int i = 0; i < users.Count; i++)
+                            {
+                                if(users[i].Id == userId)
+                                {                                 
+                                    users[i].awards.Add(award);
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
             catch (IOException e)
@@ -52,12 +82,6 @@ namespace Task6.DAL
                 {
                     for (int i = 0; i < users.Count; i++)
                     {
-                        if (users[i].Id == userId)
-                        {
-                            award.Id = users[i].awards.Count + 1;
-                            users[i].awards.Add(award);                       
-                        }
-
                         writer.WriteLine(JsonConvert.SerializeObject(users[i]));
                     }
                 }
@@ -70,15 +94,25 @@ namespace Task6.DAL
             return award;
         }
 
-        //TODO: make id work the right way
+        
         public User AddUser(User user)
         {
-            var lastId = _users.Keys.Count > 0
-                ? _users.Keys.Max() : 0;
+            List<User> users = new List<User>();
 
-            user.Id = lastId + 1;
+            string line;
 
             _users.Add(user.Id, user);
+
+            using (StreamReader reader = new StreamReader(UsersFile))
+            {
+                while ((line = reader.ReadLine()) != null)
+                {
+                    users.Add(JsonConvert.DeserializeObject<User>(line));
+                }
+                    
+            }
+
+            user.Id = users.Count > 1 ? users[users.Count - 1].Id + 1 : 1;           
 
             string json = JsonConvert.SerializeObject(user);
 

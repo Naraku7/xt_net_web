@@ -13,7 +13,7 @@ namespace Task6.Dao.Interfaces
         User GetById(int id);
         IEnumerable<User> GetAll();
         void RemoveUser(int id);
-        Award AddAward(int userId, Award award);
+        Award AddAward(int userId, int awardId);
         //void RemoveAward(int userId, int awardId);
     }
 }

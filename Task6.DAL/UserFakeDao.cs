@@ -38,31 +38,19 @@ namespace Task6.DAL
             _users.Remove(id);
         }
 
-        public Award AddAward(int userId, Award award)
-        {
-            _users.TryGetValue(userId, out var user);
-
-            //user.CommonAmountOfAwards++;
-
-            //award.Id = user.CommonAmountOfAwards;
-
-            user.awards.Add(award);
-
-            return award;
-        }
-
-        //public void RemoveAward(int userId, int awardId)
+        //public Award AddAward(int userId, Award award)
         //{
         //    _users.TryGetValue(userId, out var user);
 
-        //    Award award = null; //?
+        //    user.awards.Add(award);
 
-        //    foreach (var item in user.awards)
-        //    {
-        //        if (item.Id == awardId) award = item;
-        //    }
-
-        //    user.awards.Remove(award);
+        //    return award;
         //}
+
+        public Award AddAward(int userId, int awardId)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
