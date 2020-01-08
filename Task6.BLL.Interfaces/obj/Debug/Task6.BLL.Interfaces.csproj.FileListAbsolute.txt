@@ -1,0 +1,8 @@
+E:\Studying\C# Programms\Task6\Task6.BLL.Interfaces\bin\Debug\Task6.BLL.Interfaces.dll
+E:\Studying\C# Programms\Task6\Task6.BLL.Interfaces\bin\Debug\Task6.BLL.Interfaces.pdb
+E:\Studying\C# Programms\Task6\Task6.BLL.Interfaces\bin\Debug\Task6.Entities.dll
+E:\Studying\C# Programms\Task6\Task6.BLL.Interfaces\bin\Debug\Task6.Entities.pdb
+E:\Studying\C# Programms\Task6\Task6.BLL.Interfaces\obj\Debug\Task6.BLL.Interfaces.csprojAssemblyReference.cache
+E:\Studying\C# Programms\Task6\Task6.BLL.Interfaces\obj\Debug\Task6.BLL.Interfaces.csproj.CopyComplete
+E:\Studying\C# Programms\Task6\Task6.BLL.Interfaces\obj\Debug\Task6.BLL.Interfaces.dll
+E:\Studying\C# Programms\Task6\Task6.BLL.Interfaces\obj\Debug\Task6.BLL.Interfaces.pdb
