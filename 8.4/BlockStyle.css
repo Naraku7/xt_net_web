@@ -1,0 +1,30 @@
+body {
+    background-color: grey;
+}
+
+.block {
+    position: absolute;
+    background-color: #80ffff;
+    top: 20%;
+    left: 10%;
+    right: 10%;
+    width: 80%;
+    height: 40%;
+    border: thick solid lightblue;
+}
+
+.pointer {
+    background-color: #80ffff;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 10%;
+    left: 45%;
+    right: 45%;
+    width: 160px;
+    height: 160px;
+    border: thick solid lightblue;
+}
+
+p {
+    text-align: center;
+}
