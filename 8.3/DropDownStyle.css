@@ -14,7 +14,6 @@ li {
 }
 
 li.item {
-  padding-top: 5px;
   margin-left: 30px;
 }
 
@@ -49,10 +48,9 @@ li.item:hover::before {
 
 li.dropitem {
   padding-right: 30px;
-  margin: 3px 3px;
 }
 
-.item > a .item > a:visited {
+.item > a {
   color: #0057F2;
 }
 
@@ -69,9 +67,6 @@ li.dropitem {
   z-index: -1;
 }
 
-.item:hover li {
-  display: block;
-}
 .item:hover li.dropitem a {
   color: #0057F2;
 }
@@ -92,7 +87,7 @@ li:hover {
     min-width: 5rem;
     position: absolute;
     transition: all 0.5s ease;
-    margin-top: 1rem;
+    margin-top: 10px;
     left: 0;
     display: none;
   }

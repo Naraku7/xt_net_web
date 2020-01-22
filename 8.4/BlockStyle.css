@@ -17,12 +17,22 @@ body {
     background-color: #80ffff;
     transform: rotate(45deg);
     position: absolute;
-    top: 10%;
+    top: 9.6%;
     left: 45%;
     right: 45%;
     width: 160px;
     height: 160px;
     border: thick solid lightblue;
+}
+
+.sign {
+    position: absolute;
+    width: 20%;
+    height: 30%;
+    top: 20.5%;
+    left: 40%;
+    background-color: #80ffff;
+    vertical-align:bottom;
 }
 
 p {
