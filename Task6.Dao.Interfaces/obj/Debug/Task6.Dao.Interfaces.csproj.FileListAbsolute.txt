@@ -1,0 +1,8 @@
+E:\Studying\C# Programms\Task6\Task6.Dao.Interfaces\bin\Debug\Task6.Dao.Interfaces.dll
+E:\Studying\C# Programms\Task6\Task6.Dao.Interfaces\bin\Debug\Task6.Dao.Interfaces.pdb
+E:\Studying\C# Programms\Task6\Task6.Dao.Interfaces\bin\Debug\Task6.Entities.dll
+E:\Studying\C# Programms\Task6\Task6.Dao.Interfaces\bin\Debug\Task6.Entities.pdb
+E:\Studying\C# Programms\Task6\Task6.Dao.Interfaces\obj\Debug\Task6.Dao.Interfaces.csprojAssemblyReference.cache
+E:\Studying\C# Programms\Task6\Task6.Dao.Interfaces\obj\Debug\Task6.Dao.Interfaces.csproj.CopyComplete
+E:\Studying\C# Programms\Task6\Task6.Dao.Interfaces\obj\Debug\Task6.Dao.Interfaces.dll
+E:\Studying\C# Programms\Task6\Task6.Dao.Interfaces\obj\Debug\Task6.Dao.Interfaces.pdb
