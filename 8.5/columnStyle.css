@@ -3,16 +3,61 @@ body {
 }
 
 .container {
-    background-color: aliceblue;
+    background-color: white;
     position: absolute;
     display: inline-block;
     height: 250px;
     margin: 30px 400px;
-    
+    overflow:hidden;
+    width: max-content;
+    height: max-content;
 }
 
-td {
-    padding: 20px;
-    color: orangered;
+h3 {   
+    color: orangered;  
+    text-align: center; 
+}
+
+.img {
+    background: url(icon.png) no-repeat;
+    height: 97px;
+    width: 60px;
+    background-size: 140px;
+}
+
+.snd {
+    background-position: 0 -97px;
+}
+
+.thrd {
+    background-position: 0 -195px;
+}
+
+.column {
     text-align: center;
+    border-right: solid 2px gray;
+}
+
+.column:last-child {
+    border-right: none;
+}
+
+.container div {
+    margin: 10px 20px;
+    width: 200px;
+    display:inline-block;
+}
+
+button {
+    text-align: center;
+    background: orangered; 
+    color: white;
+    border-radius: 2px;
+    border: 0;
+    height: 25px;
+    widows: 100px;
+}
+
+a {
+    text-decoration: none;
 }
