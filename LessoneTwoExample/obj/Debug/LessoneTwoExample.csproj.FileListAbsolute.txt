@@ -1,0 +1,6 @@
+E:\Studying\C# Programms\LessoneTwoExample\LessoneTwoExample\bin\Debug\LessoneTwoExample.exe.config
+E:\Studying\C# Programms\LessoneTwoExample\LessoneTwoExample\bin\Debug\LessoneTwoExample.exe
+E:\Studying\C# Programms\LessoneTwoExample\LessoneTwoExample\bin\Debug\LessoneTwoExample.pdb
+E:\Studying\C# Programms\LessoneTwoExample\LessoneTwoExample\obj\Debug\LessoneTwoExample.csprojAssemblyReference.cache
+E:\Studying\C# Programms\LessoneTwoExample\LessoneTwoExample\obj\Debug\LessoneTwoExample.exe
+E:\Studying\C# Programms\LessoneTwoExample\LessoneTwoExample\obj\Debug\LessoneTwoExample.pdb
