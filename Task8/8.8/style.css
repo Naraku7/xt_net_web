@@ -1,0 +1,44 @@
+body {
+    background: black;
+}
+
+.title {
+    position: absolute;
+    height: 50px;
+    width: 100px;
+    background-color: black;
+    color: chocolate;
+    font-size: larger;
+    font-weight: 600;   
+}
+
+.container {
+    position: relative;
+    background-color: bisque;
+    width: 750px;
+    height: 400px;
+    margin-left: 20px;
+    left: 20px;
+    right: 20px;
+    border-radius: 10px;
+}
+
+.container::before {
+    content: '';
+	border-top: 50px solid #000;
+	border-right: 40px solid transparent;
+	border-left: 70px solid #000;
+	position: absolute;
+	left: 40px;
+	top: 0px;
+}
+
+p {
+    margin-left: 10px;
+}
+
+.text {
+    position: absolute;
+    margin-top: 60px;
+}
+
