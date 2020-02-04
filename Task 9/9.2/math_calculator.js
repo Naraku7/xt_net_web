@@ -15,13 +15,22 @@ function calculate(str) {
         result += Number(numbers[0]);
     }
 
+    result += evaluate(numbers, operators);
+
+    return result;
+}
+
+function evaluate(numbers, operators) {
+
+    let result = 0;
+
+    //starting with 1 index because of checking for minus in str[0]
     for (let i = 1; i < numbers.length; i++) { 
         switch(operators[i-1]) {
-            case '-':  result -= numbers[i];
+            case '-':  result -= Number(numbers[i]);
             case '+':  result += Number(numbers[i]);
-            case '*':  result *= numbers[i];
-            case '/':  result /= numbers[i];
-
+            case '*':  result *= Number(numbers[i]);
+            case '/':  result /= Number(numbers[i]);
         }
     }
     return result;
