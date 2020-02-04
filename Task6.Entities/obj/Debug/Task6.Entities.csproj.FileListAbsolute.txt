@@ -1,0 +1,5 @@
+E:\Studying\C# Programms\Task6\Task6.Entities\bin\Debug\Task6.Entities.dll
+E:\Studying\C# Programms\Task6\Task6.Entities\bin\Debug\Task6.Entities.pdb
+E:\Studying\C# Programms\Task6\Task6.Entities\obj\Debug\Task6.Entities.csprojAssemblyReference.cache
+E:\Studying\C# Programms\Task6\Task6.Entities\obj\Debug\Task6.Entities.dll
+E:\Studying\C# Programms\Task6\Task6.Entities\obj\Debug\Task6.Entities.pdb
