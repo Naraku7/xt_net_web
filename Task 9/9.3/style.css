@@ -1,0 +1,16 @@
+select {
+    width: 80px;
+    height: 100px;
+}
+
+.options, .buttons {
+    position: relative;
+    display: inline-block;
+}
+
+.title {
+    position: relative;
+    display: inline-block;
+    font-weight: 600; 
+    margin-left: 20px;
+}
