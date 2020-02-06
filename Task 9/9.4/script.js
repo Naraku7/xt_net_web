@@ -5,3 +5,4 @@ function pauseCountdown() {
 function continueCountdown() {
     paused = false;
 }
+
