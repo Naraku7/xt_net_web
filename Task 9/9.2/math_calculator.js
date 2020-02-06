@@ -28,9 +28,13 @@ function evaluate(numbers, operators) {
     for (let i = 1; i < numbers.length; i++) { 
         switch(operators[i-1]) {
             case '-':  result -= Number(numbers[i]);
+            break;
             case '+':  result += Number(numbers[i]);
+            break;
             case '*':  result *= Number(numbers[i]);
+            break;
             case '/':  result /= Number(numbers[i]);
+            break;
         }
     }
     return result;
