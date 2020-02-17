@@ -127,7 +127,10 @@
     <Content Include="Pages\delete_user.cshtml" />
     <Content Include="Pages\delete.cshtml" />
     <Content Include="Pages\delete_award_from_user.cshtml" />
-    <Content Include="Pages\delete_award_from_all_users.cshtml" />
+    <Content Include="Pages\delete_award_from_all.cshtml" />
+    <Content Include="Pages\edit.cshtml" />
+    <Content Include="Pages\edit_name.cshtml" />
+    <Content Include="Pages\edit_birth.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

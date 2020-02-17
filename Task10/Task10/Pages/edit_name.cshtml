@@ -4,15 +4,21 @@
 @{
     Layout = null;
 
-    int awardId = 0;
+    int userId = 0;
+    string name = null;
     string errorMessage = null;
     var userLogic = DependencyResolver.UserLogic;
 
     if (IsPost)
     {
-        if (Int32.TryParse(Request["award_id"], out awardId))
+        if (Int32.TryParse(Request["user_id"], out userId))
         {
-            userLogic.RemoveAwardFromAllUsers(awardId);
+            name = Request["name"];
+            if(name.Trim().Length < 1)
+            {
+                errorMessage = "Empty name";
+            }
+            userLogic.EditUserName(userId, name);
         }
         else
         {
@@ -25,19 +31,28 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Delete an award from all users</title>
+    <title>Delete an award from a user</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <form action="delete_user.cshtml" method="post">
+    <form action="edit_name.cshtml" method="post">
 
         <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the award you want to delete from all users:
+            Insert id of the user you want to edit:
         </div>
 
         <div style="margin: 20px">
-            <label for="input_awardId">Enter id of award:</label>
-            <input type="text" name="award_id" id="input_awardId" placeholder="Enter id of the award" value=@awardId />
+            <label for="input_userId">Enter id of user:</label>
+            <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
+        </div>
+
+        <div class="alert alert-info" role="alert style=" margin: 20px"">
+            Insert new name:
+        </div>
+
+        <div style="margin: 20px">
+            <label for="name">Enter name:</label>
+            <input type="text" name="name" id="input_awardId" placeholder="Enter id of the award" value=@name />
         </div>
 
         <button class="btn btn-primary" style="width:200px">Confirm</button>

@@ -5,20 +5,22 @@
     Layout = null;
 
     int userId = 0;
-    int awardId = 0;
+    string birth = null;
+    DateTime birthDate = new DateTime();
     string errorMessage = null;
     var userLogic = DependencyResolver.UserLogic;
 
     if (IsPost)
     {
-        if (Int32.TryParse(Request["user_id"], out userId) && Int32.TryParse(Request["award_id"], out awardId))
+        birth = Request["birth"];
+        if(Int32.TryParse(Request["user_id"], out userId) && birth != null && DateTime.TryParse(birth, out birthDate))
         {
-            Session["award_id"] = awardId;
-            userLogic.RemoveUserAward(userId, awardId);
+            birthDate = Convert.ToDateTime(birth);
+            userLogic.EditUserBirthdate(userId, birthDate);
         }
         else
         {
-            errorMessage = "Incorrect input of id";
+            errorMessage = "Incorrect input data";
         }
     }
 }
@@ -31,10 +33,10 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <form action="delete_award_from_user.cshtml" method="post">
+    <form action="edit_birth.cshtml" method="post">
 
         <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the user you want to delete the award from:
+            Insert id of the user you want to edit:
         </div>
 
         <div style="margin: 20px">
@@ -43,21 +45,16 @@
         </div>
 
         <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the award you want to delete from the user:
+            Insert new date:
         </div>
 
         <div style="margin: 20px">
-            <label for="input_awardId">Enter id of award:</label>
-            <input type="text" name="award_id" id="input_awardId" placeholder="Enter id of the award" value=@awardId />
+            <label for="input_birth">Insert date of birth: </label>
+            <input type="date" name="birth" id="input_birth" placeholder="yyyy.mm.dd" value=@birth />
         </div>
 
-        <button id="confirm" class="btn btn-primary" style="width:200px">Confirm</button>
+        <button class="btn btn-primary" style="width:200px">Confirm</button>
     </form>
-
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="delete_all">
-        <label class="custom-control-label" for="delete_all">Do you want to delete this award from all users?</label>
-    </div>
 
     @if (errorMessage != null)
     {
@@ -69,11 +66,5 @@
     <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
         Return to the main page
     </button>
-
-    <script>
-        if (document.getElementById('delete_all').checked) {
-            location.href = 'delete_award_from_all.cshtml';
-        }
-    </script>
 </body>
 </html>

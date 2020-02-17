@@ -1,0 +1,17 @@
+﻿@using System.Globalization;
+@using Task6.Entities;
+@using Task6.Ioc;
+@{
+    var userLogic = DependencyResolver.UserLogic;
+
+    if (Session["award_id"] != null)
+    {
+        int awardId = (int)Session["award_id"];
+
+        userLogic.RemoveAwardFromAllUsers(awardId);
+
+        Response.Redirect("index.cshtml");
+    }
+}
+
+
