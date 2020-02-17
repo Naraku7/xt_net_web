@@ -1,0 +1,67 @@
+﻿@using Task6.Entities;
+@using Task6.Ioc;
+@using System.Text;
+@{
+    string userName = "Anon";
+    var userLogic = DependencyResolver.UserLogic;
+
+    IEnumerable<User> users = userLogic.GetAll();
+
+    StringBuilder awards = new StringBuilder();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <title>List of users</title>
+</head>
+<body style="background-image: url(https://cdnb.artstation.com/p/assets/images/images/006/493/903/large/wil-quinn-aidan-20.jpg?1499035825);">
+    <div class="alert alert-primary" role="alert" style="width:200px; margin: 100px auto">Hello, @userName!</div>
+
+    <div style="background-color: aquamarine; opacity: 0.8">
+
+
+    </div>
+
+
+    <table class="table table-bordered" id="user_list;" style="background-color: aquamarine; opacity: 0.8">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Awards</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                if (user != null)
+                {
+                    foreach (var award in user.awards)
+                    {
+                        awards.Append(award.ToString()).Append("\n");
+                    }
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Name</td>
+                        <td>@user.Age</td>
+                        <td>@awards.ToString()</td>
+                    </tr>
+                    awards.Clear();
+                }
+            }
+        </tbody>
+    </table>
+
+    <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
+        Return to the main page
+    </button>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+
+</body>
+</html>

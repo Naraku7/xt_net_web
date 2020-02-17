@@ -1,0 +1,57 @@
+﻿@using System.Globalization;
+@using Task6.Entities;
+@using Task6.Ioc;
+@{
+    Layout = null;
+
+    int awardId = 0;
+    string errorMessage = null;
+    var userLogic = DependencyResolver.UserLogic;
+
+    if (IsPost)
+    {
+        if (Int32.TryParse(Request["award_id"], out awardId))
+        {
+            userLogic.RemoveAwardFromAllUsers(awardId);
+        }
+        else
+        {
+            errorMessage = "Incorrect input of id";
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Delete an award from all users</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <form action="delete_user.cshtml" method="post">
+
+        <div class="alert alert-info" role="alert style=" margin: 20px"">
+            Insert id of the award you want to delete from all users:
+        </div>
+
+        <div style="margin: 20px">
+            <label for="input_awardId">Enter id of award:</label>
+            <input type="text" name="award_id" id="input_awardId" placeholder="Enter id of the award" value=@awardId />
+        </div>
+
+        <button class="btn btn-primary" style="width:200px">Confirm</button>
+    </form>
+
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @errorMessage
+        </div>
+    }
+
+    <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
+        Return to the main page
+    </button>
+</body>
+</html>

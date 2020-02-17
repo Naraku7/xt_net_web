@@ -1,0 +1,62 @@
+﻿@using System.Globalization;
+@using Task6.Entities;
+@using Task6.Ioc;
+@{
+    Layout = null;
+
+    string title = null;
+    string errorMessage = null;
+    var awardLogic = DependencyResolver.AwardLogic;
+
+    if (IsPost)
+    {
+        title = Request["title"];
+
+        if(title.Trim().Length < 1)
+        {
+            errorMessage = "Incorrect title";
+        }
+
+        Award award = new Award(title);
+
+        awardLogic.CreateAward(award);
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Creation of a user</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <form action="creation_of_award.cshtml" method="post">
+
+        <div class="alert alert-info" role="alert style=" margin: 20px"">
+            Please enter the information about the user you want to create. You can create a few users in a row.
+        </div>
+
+        <div style="margin: 20px">
+            <label for="input_title">Enter title:</label>
+            <input type="text" name="title" id="input_title" placeholder="Title of the award" value=@title />
+        </div>
+
+        <button class="btn btn-primary" style="width:200px">Confirm</button>
+    </form>
+
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @errorMessage
+        </div>
+    }
+   
+
+    <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
+        Return to the main page
+    </button>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿@using System.Globalization;
+@using Task6.Entities;
+@using Task6.Ioc;
+@{
+    Layout = null;
+
+    string name = null;
+    string birth = null;
+    DateTime birthDate = new DateTime();
+    string errorMessage = null;
+    var userLogic = DependencyResolver.UserLogic;
+
+    if (IsPost)
+    {
+        name = Request["name"];
+        birth = Request["birth"];
+
+        if (name.Trim().Length < 1)
+        {
+            errorMessage = "Incorrect data";   
+        }
+        else if (name != null && birth != null && DateTime.TryParse(birth, out birthDate))
+        {
+            birthDate = Convert.ToDateTime(birth);
+            userLogic.AddUser(new User(name, birthDate));
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Creation of a user</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <form action="creation_of_user.cshtml" method="post">
+
+        <div class="alert alert-info" role="alert style=" margin: 20px"">
+            Please enter the information about the user you want to create. You can create a few users in a row.
+        </div>
+
+        <div style="margin: 20px">
+            <label for="input_name">Enter name:</label>
+            <input type="text" name="name" id="input_name" placeholder="Enter name" value=@name />
+        </div>
+
+        <div style="margin: 20px">
+            <label for="input_birth">Insert date of birth: </label>
+            <input type="date" name="birth" id="input_birth" placeholder="yyyy.mm.dd" value=@birth />
+        </div>
+        <button class="btn btn-primary" style="width:200px">Confirm</button>
+    </form>
+
+    @if (name != null && birth != null && errorMessage == null)
+    {
+
+        <div class="alert alert-info" role="alert" style="text-align: center">
+            Имя: @name
+        </div>
+
+        <div class="alert alert-info" role="alert" style="text-align: center">
+            Дата рождения: @birth
+        </div>
+
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            @errorMessage
+        </div>
+    }
+
+    <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
+        Return to the main page
+    </button>
+
+</body>
+</html>

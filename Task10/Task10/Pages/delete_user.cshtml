@@ -1,0 +1,57 @@
+﻿@using System.Globalization;
+@using Task6.Entities;
+@using Task6.Ioc;
+@{
+    Layout = null;
+
+    int id = 0;
+    string errorMessage = null;
+    var userLogic = DependencyResolver.UserLogic;
+
+    if (IsPost)
+    {
+        if (Int32.TryParse(Request["user_id"], out id))
+        {
+            userLogic.RemoveUser(id);
+        }
+        else
+        {
+            errorMessage = "Incorrect input of id";
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Delete an award</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <form action="delete_user.cshtml" method="post">
+
+        <div class="alert alert-info" role="alert style=" margin: 20px"">
+            Insert id of the user you want to delete:
+        </div>
+
+        <div style="margin: 20px">
+            <label for="input_userId">Enter id of user:</label>
+            <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@id />
+        </div>
+
+        <button class="btn btn-primary" style="width:200px">Confirm</button>
+    </form>
+
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @errorMessage
+        </div>
+    }
+
+    <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
+        Return to the main page
+    </button>
+</body>
+</html>
