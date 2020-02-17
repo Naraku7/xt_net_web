@@ -1,0 +1,6 @@
+E:\Studying\C# Programms\LessoneTwoExample\Task0\bin\Debug\Task0.exe.config
+E:\Studying\C# Programms\LessoneTwoExample\Task0\bin\Debug\Task0.exe
+E:\Studying\C# Programms\LessoneTwoExample\Task0\bin\Debug\Task0.pdb
+E:\Studying\C# Programms\LessoneTwoExample\Task0\obj\Debug\Task0.csprojAssemblyReference.cache
+E:\Studying\C# Programms\LessoneTwoExample\Task0\obj\Debug\Task0.exe
+E:\Studying\C# Programms\LessoneTwoExample\Task0\obj\Debug\Task0.pdb
