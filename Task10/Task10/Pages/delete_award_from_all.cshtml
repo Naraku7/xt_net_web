@@ -3,15 +3,16 @@
 @using Task6.Ioc;
 @{
     var userLogic = DependencyResolver.UserLogic;
+    int awardId = 0;
 
-    if (Session["award_id"] != null)
+    if (Request.Cookies["awardId"] != null)
     {
-        int awardId = (int)Session["award_id"];
+        awardId = Int32.Parse(Request.Cookies["awardId"].Value);
 
         userLogic.RemoveAwardFromAllUsers(awardId);
-
-        Response.Redirect("index.cshtml");
     }
+
+    Response.Redirect("delete_award_from_user.cshtml");
 }
 
 

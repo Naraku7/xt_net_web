@@ -1,0 +1,73 @@
+﻿@using Task6.Ioc;
+@{ WebImage photo = null;
+    var newFileName = "";
+    var imagePath = "";
+    int userId = 0;
+    string errorMessage = null;
+
+    var userLogic = DependencyResolver.UserLogic;
+
+    if (IsPost)
+    {
+        if(Int32.TryParse(Request["user_id"], out userId))
+        {
+            photo = WebImage.GetImageFromRequest();
+            if (photo != null)
+            {
+                newFileName = Guid.NewGuid().ToString() + "_" +
+                Path.GetFileName(photo.FileName);
+                imagePath = @"Images/" + newFileName;
+                photo.Resize(120, 140, true, true).RotateRight();
+
+                photo.Save(@"~/" + imagePath);
+
+                userLogic.AddImage(userId, @"~/" + imagePath);
+            }
+        }      
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Upload image</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <form action="upload_image.cshtml" method="post" enctype="multipart/form-data">
+
+        <div class="alert alert-info" role="alert style=" margin: 20px"">
+            Insert id of the user you want the award to be added to
+        </div>
+
+        <div style="margin: 20px">
+            <label for="input_userId">Enter id of user:</label>
+            <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile02" name="Image">
+                <label class="custom-file-label" for="inputGroupFile02">Choose image</label>
+            </div>
+            <div class="input-group-append">
+                <span class="input-group-text" id="">Upload</span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:200px">Confirm</button>
+    </form>
+
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @errorMessage
+        </div>
+    }
+
+    <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
+        Return to the main page
+    </button>
+</body>
+</html>

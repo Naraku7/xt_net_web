@@ -131,6 +131,8 @@
     <Content Include="Pages\edit.cshtml" />
     <Content Include="Pages\edit_name.cshtml" />
     <Content Include="Pages\edit_birth.cshtml" />
+    <Content Include="Pages\upload_image.cshtml" />
+    <Content Include="Pages\delete_image.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -256,6 +258,9 @@
       <Project>{5e516fb0-bf63-44bc-a4b9-f533f79b8afc}</Project>
       <Name>Task6.Ioc</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
