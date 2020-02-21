@@ -24,55 +24,105 @@
     </div>
 
 
-    <table class="table table-bordered" id="user_list;" style="background-color: aquamarine; opacity: 0.8">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Age</th>
-                <th scope="col">Awards</th>
-                <th scope="col">Images</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in users)
-            {
-                if (user != null)
+    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+    {
+        <table class="table table-bordered" id="user_list;" style="background-color: aquamarine; opacity: 0.8">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Awards</th>
+                    <th scope="col">Images</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in users)
                 {
-                    foreach (var award in user.awards)
+                    if (user != null)
                     {
-                        awards.Append(award.ToString()).Append("\n");
-                    }
-                    <tr>
-                        <td>@user.Id</td>
-                        <td>@user.Name</td>
-                        <td>@user.Age</td>
-                        <td>@awards.ToString()</td>
-                        <td>
-                            @if (user.images.Count != 0)
-                            {
-                                for (int i = 1; i <= user.images.Count(); i++)
+                        foreach (var award in user.awards)
+                        {
+                            awards.Append(award.ToString()).Append("\n");
+                        }
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.Name</td>
+                            <td>@user.Age</td>
+                            <td>@awards.ToString()</td>
+                            <td>
+                                @if (user.images.Count != 0)
                                 {
+                                    for (int i = 1; i <= user.images.Count(); i++)
+                                    {
 
+                                        <figure>
+                                            <p><img src="../@user.images[i-1].Remove(0, 2)" alt="image" /></p>
+                                            <figcaption>@i</figcaption>
+                                        </figure>
+                                    }
+                                }
+                                else
+                                {
                                     <figure>
-                                        <p><img src="../@user.images[i-1].Remove(0, 2)" alt="image" /></p>
-                                        <figcaption>@i</figcaption>
+                                        <p><img src="../Images/question_mark.jpg" alt="image" width="60" height="60" /></p>
                                     </figure>
                                 }
-                            }
-                            else
-                            {
-                                <figure>
-                                    <p><img src="../Images/question_mark.jpg" alt="image" width="60" height="60"/></p>
-                                </figure>
-                            }
-                        </td>
-                    </tr>
-                    awards.Clear();
+                            </td>
+                        </tr>
+                        awards.Clear();
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <table class="table table-bordered" id="user_list;" style="background-color: aquamarine; opacity: 0.8">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Images</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in users)
+                {
+                    if (user != null)
+                    {
+
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.Name</td>
+                            <td>@user.Age</td>
+                            <td>
+                                @if (user.images.Count != 0)
+                                {
+                                    for (int i = 1; i <= user.images.Count(); i++)
+                                    {
+
+                                        <figure>
+                                            <p><img src="../@user.images[i-1].Remove(0, 2)" alt="image" /></p>
+                                            <figcaption>@i</figcaption>
+                                        </figure>
+                                    }
+                                }
+                                else
+                                {
+                                    <figure>
+                                        <p><img src="../Images/question_mark.jpg" alt="image" width="60" height="60" /></p>
+                                    </figure>
+                                }
+                            </td>
+                        </tr>
+                        awards.Clear();
+                    }
+                }
+            </tbody>
+        </table>
+    }
 
     <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
         Return to the main page

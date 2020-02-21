@@ -30,27 +30,39 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <form action="adding_award.cshtml" method="post">
 
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the user you want the award to be added to
-        </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <form action="adding_award.cshtml" method="post">
 
-        <div style="margin: 20px">
-            <label for="input_userId">Enter id of user:</label>
-            <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
-        </div>
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Insert id of the user you want the award to be added to
+            </div>
 
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the award
-        </div>
+            <div style="margin: 20px">
+                <label for="input_userId">Enter id of user:</label>
+                <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
+            </div>
 
-        <div style="margin: 20px">
-            <label for="input_awardId">Enter id of award: </label>
-            <input type="text" name="award_id" id="input_awardId" placeholder="Enter id of the award" value=@awardId />
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Insert id of the award
+            </div>
+
+            <div style="margin: 20px">
+                <label for="input_awardId">Enter id of award: </label>
+                <input type="text" name="award_id" id="input_awardId" placeholder="Enter id of the award" value=@awardId />
+            </div>
+            <button class="btn btn-primary" style="width:200px">Confirm</button>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            You are not allowed to see this page!
         </div>
-        <button class="btn btn-primary" style="width:200px">Confirm</button>
-    </form>
+    }
+
+    
 
     @if (errorMessage != null)
     {

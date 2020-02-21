@@ -1,0 +1,76 @@
+﻿@using Task10.Models;
+@{
+    string name = null, pass = null, repeatPass = null;
+
+    name = Request["name"];
+    pass = Request["pass"];
+    repeatPass = Request["repeat_pass"];
+    string errorMessage = null;
+
+    UserAuthentification auth = new UserAuthentification();
+
+    // && pass == "admin"
+    if (IsPost)
+    {
+        if (pass != repeatPass)
+        {
+            errorMessage = "Password doesn't match";
+        }
+
+        if (auth.CreateAccount(name, pass))
+        {       
+            Response.Redirect("login.cshtml");
+        }
+        else
+        {
+            errorMessage = "User with such name already exists";
+        }       
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+    @if (User.IsInRole("Admin"))
+    {
+    <form action="~/Pages/create_account.cshtml" method="post">
+        <div class="alert alert-primary" role="alert" style="width:200px">Registration</div>
+
+        <div>
+            <label>Enter your name: </label>
+            <input class="form-control" style="width:200px" type="text" name="name" id="name" value=@name />
+        </div>
+        <div>
+            <label>Enter your password: </label>
+            <input class="form-control" style="width:200px" type="password" name="pass" id="pass" value=@pass />
+        </div>
+
+        <div>
+            <label>Repeat your password: </label>
+            <input class="form-control" style="width:200px" type="password" name="repeat_pass" id="repeat_pass" value=@repeatPass />
+        </div>
+        <br>
+        <button class="btn btn-primary" style="width:200px">Create</button>
+    </form>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            You are not allowed to see this page!
+        </div>
+    }
+
+    
+
+    <div class="alert alert-warning" role="alert">
+        @errorMessage
+    </div>
+
+</body>
+</html>

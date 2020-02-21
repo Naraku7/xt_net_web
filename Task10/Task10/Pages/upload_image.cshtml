@@ -35,29 +35,41 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <form action="upload_image.cshtml" method="post" enctype="multipart/form-data">
 
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the user you want the award to be added to
-        </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <form action="upload_image.cshtml" method="post" enctype="multipart/form-data">
 
-        <div style="margin: 20px">
-            <label for="input_userId">Enter id of user:</label>
-            <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile02" name="Image">
-                <label class="custom-file-label" for="inputGroupFile02">Choose image</label>
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Insert id of the user you want the award to be added to
             </div>
-            <div class="input-group-append">
-                <span class="input-group-text" id="">Upload</span>
-            </div>
-        </div>
 
-        <button type="submit" class="btn btn-primary" style="width:200px">Confirm</button>
-    </form>
+            <div style="margin: 20px">
+                <label for="input_userId">Enter id of user:</label>
+                <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile02" name="Image">
+                    <label class="custom-file-label" for="inputGroupFile02">Choose image</label>
+                </div>
+                <div class="input-group-append">
+                    <span class="input-group-text" id="">Upload</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:200px">Confirm</button>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            You are not allowed to see this page!
+        </div>
+    }
+
+    
 
     @if (errorMessage != null)
     {

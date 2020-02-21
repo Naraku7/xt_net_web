@@ -34,28 +34,39 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <form action="delete_image.cshtml" method="post">
 
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the user you want to delete the image from:
+    @if (User.IsInRole("Admin"))
+    {
+        <form action="delete_image.cshtml" method="post">
+
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Insert id of the user you want to delete the image from:
+            </div>
+
+            <div style="margin: 20px">
+                <label for="input_userId">Enter id of user:</label>
+                <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
+            </div>
+
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Insert id of the award you want to delete from the user:
+            </div>
+
+            <div style="margin: 20px">
+                <label for="input_imageNumber">Enter number of image:</label>
+                <input type="text" name="image_number" id="input_imageNumber" placeholder="Enter number of the image" value=@imageNumber />
+            </div>
+
+            <button id="confirm" class="btn btn-primary" style="width:200px">Confirm</button>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            You are not allowed to see this page!
         </div>
-
-        <div style="margin: 20px">
-            <label for="input_userId">Enter id of user:</label>
-            <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
-        </div>
-
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the award you want to delete from the user:
-        </div>
-
-        <div style="margin: 20px">
-            <label for="input_imageNumber">Enter number of image:</label>
-            <input type="text" name="image_number" id="input_imageNumber" placeholder="Enter number of the image" value=@imageNumber />
-        </div>
-
-        <button id="confirm" class="btn btn-primary" style="width:200px">Confirm</button>
-    </form>
+    }
+        
 
     @if (errorMessage != null)
     {

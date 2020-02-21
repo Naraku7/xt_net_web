@@ -1,0 +1,49 @@
+﻿@using Task10.Models;
+@{
+    string name = null, pass = null;
+
+    name = Request["name"];
+    pass = Request["pass"];
+
+    UserAuthentification auth = new UserAuthentification();
+
+    List<Account> accs = auth.GetAccounts();
+
+    if (IsPost)
+    {
+        foreach(var acc in accs)
+        {
+            if(acc.Name == name && acc.Password == pass)
+            {
+                FormsAuthentication.SetAuthCookie(name, createPersistentCookie: true);
+
+                Response.Redirect("~");
+            }
+        }  
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <form action="~/Pages/login" method="post">
+        <div>
+            <label>Name: </label>
+            <input class="form-control" style="width:200px" type="text" name="name" id="name" value=@name />
+        </div>
+        <div>
+            <label>Password: </label>
+            <input class="form-control" style="width:200px" type="password" name="pass" id="pass" value=@pass />
+        </div>
+        <br>
+        <button class="btn btn-primary" style="width:200px">Login</button>
+    </form>
+
+    <button class="btn btn-info" style="width:200px" onclick="location.href= 'create_account.cshtml'">I'm a new user</button>
+</body>
+</html>

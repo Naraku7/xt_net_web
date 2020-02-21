@@ -36,23 +36,34 @@
 </head>
 <body>
 
-    <form action="creation_of_user.cshtml" method="post">
+    @if (User.IsInRole("Admin"))
+    {
+        <form action="creation_of_user.cshtml" method="post">
 
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Please enter the information about the user you want to create. You can create a few users in a row.
-        </div>
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Please enter the information about the user you want to create. You can create a few users in a row.
+            </div>
 
-        <div style="margin: 20px">
-            <label for="input_name">Enter name:</label>
-            <input type="text" name="name" id="input_name" placeholder="Enter name" value=@name />
-        </div>
+            <div style="margin: 20px">
+                <label for="input_name">Enter name:</label>
+                <input type="text" name="name" id="input_name" placeholder="Enter name" value=@name />
+            </div>
 
-        <div style="margin: 20px">
-            <label for="input_birth">Insert date of birth: </label>
-            <input type="date" name="birth" id="input_birth" placeholder="yyyy.mm.dd" value=@birth />
+            <div style="margin: 20px">
+                <label for="input_birth">Insert date of birth: </label>
+                <input type="date" name="birth" id="input_birth" placeholder="yyyy.mm.dd" value=@birth />
+            </div>
+            <button class="btn btn-primary" style="width:200px">Confirm</button>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            You are not allowed to see this page!
         </div>
-        <button class="btn btn-primary" style="width:200px">Confirm</button>
-    </form>
+    }
+
+    
 
     @if (name != null && birth != null && errorMessage == null)
     {

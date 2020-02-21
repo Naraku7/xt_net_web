@@ -31,20 +31,30 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
+    @if (User.IsInRole("Admin"))
+    {
+        <form action="creation_of_award.cshtml" method="post">
 
-    <form action="creation_of_award.cshtml" method="post">
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Please enter the information about the user you want to create. You can create a few users in a row.
+            </div>
 
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Please enter the information about the user you want to create. You can create a few users in a row.
+            <div style="margin: 20px">
+                <label for="input_title">Enter title:</label>
+                <input type="text" name="title" id="input_title" placeholder="Title of the award" value=@title />
+            </div>
+
+            <button class="btn btn-primary" style="width:200px">Confirm</button>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            You are not allowed to see this page!
         </div>
+    }
 
-        <div style="margin: 20px">
-            <label for="input_title">Enter title:</label>
-            <input type="text" name="title" id="input_title" placeholder="Title of the award" value=@title />
-        </div>
-
-        <button class="btn btn-primary" style="width:200px">Confirm</button>
-    </form>
+    
 
     @if (errorMessage != null)
     {
@@ -52,7 +62,7 @@
             @errorMessage
         </div>
     }
-   
+
 
     <button type="button" button class="btn btn-primary" style="width:200px; margin-top: 10px" onClick='location.href="../index.cshtml"'>
         Return to the main page

@@ -9,7 +9,7 @@
     {
         awardId = Int32.Parse(Request.Cookies["awardId"].Value);
 
-        userLogic.RemoveAwardFromAllUsers(awardId);
+        //userLogic.RemoveUserAward(0, awardId, true);
     }
 
     Response.Redirect("delete_award_from_user.cshtml");

@@ -133,6 +133,12 @@
     <Content Include="Pages\edit_birth.cshtml" />
     <Content Include="Pages\upload_image.cshtml" />
     <Content Include="Pages\delete_image.cshtml" />
+    <Content Include="Pages\login.cshtml" />
+    <Content Include="Pages\create_account.cshtml" />
+    <Content Include="Pages\SignOut.cshtml" />
+    <Content Include="Pages\admin_menu.cshtml" />
+    <Content Include="Pages\give_role.cshtml" />
+    <Content Include="Pages\remove_role.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -222,6 +228,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\MyRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +264,10 @@
     <ProjectReference Include="..\..\..\Task6\Task6.Ioc\Task6.Ioc.csproj">
       <Project>{5e516fb0-bf63-44bc-a4b9-f533f79b8afc}</Project>
       <Name>Task6.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Authentification\Authentification.csproj">
+      <Project>{dde8588a-6aa6-467a-8954-ec162d3c14cb}</Project>
+      <Name>Authentification</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

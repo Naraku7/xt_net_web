@@ -35,28 +35,38 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <form action="edit_name.cshtml" method="post">
 
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert id of the user you want to edit:
+    @if (User.IsInRole("Admin"))
+    {
+        <form action="edit_name.cshtml" method="post">
+
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Insert id of the user you want to edit:
+            </div>
+
+            <div style="margin: 20px">
+                <label for="input_userId">Enter id of user:</label>
+                <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
+            </div>
+
+            <div class="alert alert-info" role="alert style=" margin: 20px"">
+                Insert new name:
+            </div>
+
+            <div style="margin: 20px">
+                <label for="name">Enter name:</label>
+                <input type="text" name="name" id="input_awardId" placeholder="Enter id of the award" value=@name />
+            </div>
+
+            <button class="btn btn-primary" style="width:200px">Confirm</button>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            You are not allowed to see this page!
         </div>
-
-        <div style="margin: 20px">
-            <label for="input_userId">Enter id of user:</label>
-            <input type="text" name="user_id" id="input_userId" placeholder="Enter id of the user" value=@userId />
-        </div>
-
-        <div class="alert alert-info" role="alert style=" margin: 20px"">
-            Insert new name:
-        </div>
-
-        <div style="margin: 20px">
-            <label for="name">Enter name:</label>
-            <input type="text" name="name" id="input_awardId" placeholder="Enter id of the award" value=@name />
-        </div>
-
-        <button class="btn btn-primary" style="width:200px">Confirm</button>
-    </form>
+    } 
 
     @if (errorMessage != null)
     {
