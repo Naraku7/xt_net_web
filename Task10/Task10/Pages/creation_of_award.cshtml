@@ -1,6 +1,7 @@
 ﻿@using System.Globalization;
 @using Task6.Entities;
 @using Task6.Ioc;
+@using Task10.Models;
 @{
     Layout = null;
 
@@ -8,11 +9,15 @@
     string errorMessage = null;
     var awardLogic = DependencyResolver.AwardLogic;
 
+    UserAuthentification auth = new UserAuthentification();
+
+    string userName = User.Identity.Name;
+
     if (IsPost)
     {
         title = Request["title"];
 
-        if(title.Trim().Length < 1)
+        if (title.Trim().Length < 1)
         {
             errorMessage = "Incorrect title";
         }
@@ -31,7 +36,7 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
         <form action="creation_of_award.cshtml" method="post">
 
@@ -54,7 +59,7 @@
         </div>
     }
 
-    
+
 
     @if (errorMessage != null)
     {

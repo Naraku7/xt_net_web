@@ -1,6 +1,7 @@
 ﻿@using System.Globalization;
 @using Task6.Entities;
 @using Task6.Ioc;
+@using Task10.Models;
 @{
     Layout = null;
 
@@ -9,11 +10,15 @@
     string errorMessage = null;
     var userLogic = DependencyResolver.UserLogic;
 
+    UserAuthentification auth = new UserAuthentification();
+
+    string userName = User.Identity.Name;
+
     if (IsPost)
     {
         if (Int32.TryParse(Request["user_id"], out userId) && Int32.TryParse(Request["image_number"], out imageNumber))
         {
-            if(imageNumber < 1)
+            if (imageNumber < 1)
             {
                 errorMessage = "Number of image cannot be less then 1";
             }
@@ -35,7 +40,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
         <form action="delete_image.cshtml" method="post">
 
@@ -66,7 +71,7 @@
             You are not allowed to see this page!
         </div>
     }
-        
+
 
     @if (errorMessage != null)
     {

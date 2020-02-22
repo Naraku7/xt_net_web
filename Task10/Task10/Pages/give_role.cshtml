@@ -22,7 +22,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
         <form action="give_role.cshtml" method="post">
 

@@ -1,6 +1,7 @@
 ﻿@using System.Globalization;
 @using Task6.Entities;
 @using Task6.Ioc;
+@using Task10.Models;
 @{
     Layout = null;
 
@@ -10,7 +11,11 @@
     var userLogic = DependencyResolver.UserLogic;
     int forAll = 0;
 
-    if(Int32.TryParse(Request["award_id"], out awardId))
+    UserAuthentification auth = new UserAuthentification();
+
+    string userName = User.Identity.Name;
+
+    if (Int32.TryParse(Request["award_id"], out awardId))
     {
         HttpCookie cookName = new HttpCookie("awardId");
         cookName.Value = awardId.ToString();
@@ -46,7 +51,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
         <form action="delete_award_from_user.cshtml" method="post">
 
@@ -78,7 +83,7 @@
         </div>
     }
 
-    
+
 
 
     @if (errorMessage != null)

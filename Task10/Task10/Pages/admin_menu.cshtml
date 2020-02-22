@@ -7,7 +7,7 @@
 </head>
 <body style="background-color: bisque">
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
         <div class="container" style="margin-top: 5%">
 

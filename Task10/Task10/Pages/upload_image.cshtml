@@ -1,4 +1,5 @@
 ﻿@using Task6.Ioc;
+@using Task10.Models;
 @{ WebImage photo = null;
     var newFileName = "";
     var imagePath = "";
@@ -7,9 +8,13 @@
 
     var userLogic = DependencyResolver.UserLogic;
 
+    UserAuthentification auth = new UserAuthentification();
+
+    string userName = User.Identity.Name;
+
     if (IsPost)
     {
-        if(Int32.TryParse(Request["user_id"], out userId))
+        if (Int32.TryParse(Request["user_id"], out userId))
         {
             photo = WebImage.GetImageFromRequest();
             if (photo != null)
@@ -23,7 +28,7 @@
 
                 userLogic.AddImage(userId, @"~/" + imagePath);
             }
-        }      
+        }
     }
 }
 
@@ -36,7 +41,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "User"))
     {
         <form action="upload_image.cshtml" method="post" enctype="multipart/form-data">
 
@@ -69,7 +74,7 @@
         </div>
     }
 
-    
+
 
     @if (errorMessage != null)
     {

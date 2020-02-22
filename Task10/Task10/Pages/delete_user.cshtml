@@ -1,12 +1,17 @@
 ﻿@using System.Globalization;
 @using Task6.Entities;
 @using Task6.Ioc;
+@using Task10.Models;
 @{
     Layout = null;
 
     int id = 0;
     string errorMessage = null;
     var userLogic = DependencyResolver.UserLogic;
+
+    UserAuthentification auth = new UserAuthentification();
+
+    string userName = User.Identity.Name;
 
     if (IsPost)
     {
@@ -30,7 +35,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
         <form action="delete_user.cshtml" method="post">
 
@@ -53,7 +58,7 @@
         </div>
     }
 
-    
+
 
     @if (errorMessage != null)
     {

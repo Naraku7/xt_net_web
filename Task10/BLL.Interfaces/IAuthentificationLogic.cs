@@ -11,5 +11,6 @@ namespace Task10
         bool CreateAccount(string name, string password);
         void GiveRole(string name, string role);
         void RemoveRole(string name, string role);
+        bool HasRole(string username, string roleName);
     }
 }

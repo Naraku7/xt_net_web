@@ -1,10 +1,14 @@
-﻿@{ 
+﻿@using Task10.Models;
+@{
     string userName = null;
 
-    if(User.Identity.Name == "")
+    UserAuthentification auth = new UserAuthentification();
+
+    if (User.Identity.Name == "")
     {
         userName = "Anon";
-    } else
+    }
+    else
     {
         userName = User.Identity.Name;
     }
@@ -30,7 +34,7 @@
             1. Watch the list of users
         </button>
 
-        @if (User.IsInRole("Admin"))
+        @if (auth.HasRole(userName, "Admin"))
         {
             <button type="button" class="btn btn-secondary btn-lg btn-block" onClick='location.href="Pages\\creation_of_user.cshtml"'>
                 2. Create

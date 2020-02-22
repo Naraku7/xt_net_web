@@ -1,6 +1,7 @@
 ﻿@using System.Globalization;
 @using Task6.Entities;
 @using Task6.Ioc;
+@using Task10.Models;
 @{
     Layout = null;
 
@@ -10,10 +11,14 @@
     string errorMessage = null;
     var userLogic = DependencyResolver.UserLogic;
 
+    UserAuthentification auth = new UserAuthentification();
+
+    string userName = User.Identity.Name;
+
     if (IsPost)
     {
         birth = Request["birth"];
-        if(Int32.TryParse(Request["user_id"], out userId) && birth != null && DateTime.TryParse(birth, out birthDate))
+        if (Int32.TryParse(Request["user_id"], out userId) && birth != null && DateTime.TryParse(birth, out birthDate))
         {
             birthDate = Convert.ToDateTime(birth);
             userLogic.EditUserBirthdate(userId, birthDate);
@@ -34,7 +39,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
         <form action="edit_birth.cshtml" method="post">
 

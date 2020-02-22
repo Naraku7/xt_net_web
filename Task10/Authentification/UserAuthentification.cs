@@ -142,5 +142,39 @@ namespace Task10.Models
 
             return storedAccs;
         }
+
+        public bool HasRole(string username, string roleName)
+        {
+            Account accFromJSON = null;
+
+            using (StreamReader reader = new StreamReader(AccPath))
+            {
+                while ((line = reader.ReadLine()) != null)
+                {
+                    accFromJSON = JsonConvert.DeserializeObject<Account>(line);
+
+                    if (accFromJSON != null)
+                    {
+                        storedAccs.Add(accFromJSON);
+                    }
+                }
+            }
+
+            foreach (var acc in storedAccs)
+            {
+                if (acc.Name == username)
+                {
+                    foreach (var role in acc.Roles)
+                    {
+                        if(role == "Admin")
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

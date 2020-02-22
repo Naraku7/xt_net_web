@@ -37,7 +37,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
     <form action="~/Pages/create_account.cshtml" method="post">
         <div class="alert alert-primary" role="alert" style="width:200px">Registration</div>

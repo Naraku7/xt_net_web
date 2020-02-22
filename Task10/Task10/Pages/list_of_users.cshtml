@@ -1,12 +1,17 @@
 ﻿@using Task6.Entities;
 @using Task6.Ioc;
 @using System.Text;
-@{   
+@using Task10.Models;
+@{
     var userLogic = DependencyResolver.UserLogic;
 
     IEnumerable<User> users = userLogic.GetAll();
 
     StringBuilder awards = new StringBuilder();
+
+    UserAuthentification auth = new UserAuthentification();
+
+    string userName = User.Identity.Name;
 }
 
 <!DOCTYPE html>
@@ -24,7 +29,7 @@
     </div>
 
 
-    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+    @if (auth.HasRole(userName, "User"))
     {
         <table class="table table-bordered" id="user_list;" style="background-color: aquamarine; opacity: 0.8">
             <thead>

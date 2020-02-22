@@ -1,6 +1,7 @@
 ﻿@using System.Globalization;
 @using Task6.Entities;
 @using Task6.Ioc;
+@using Task10.Models;
 @{
     Layout = null;
 
@@ -10,6 +11,10 @@
     string errorMessage = null;
     var userLogic = DependencyResolver.UserLogic;
 
+    UserAuthentification auth = new UserAuthentification();
+
+    string userName = User.Identity.Name;
+
     if (IsPost)
     {
         name = Request["name"];
@@ -17,7 +22,7 @@
 
         if (name.Trim().Length < 1)
         {
-            errorMessage = "Incorrect data";   
+            errorMessage = "Incorrect data";
         }
         else if (name != null && birth != null && DateTime.TryParse(birth, out birthDate))
         {
@@ -36,7 +41,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "Admin"))
     {
         <form action="creation_of_user.cshtml" method="post">
 
@@ -63,7 +68,7 @@
         </div>
     }
 
-    
+
 
     @if (name != null && birth != null && errorMessage == null)
     {

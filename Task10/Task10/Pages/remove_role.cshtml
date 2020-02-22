@@ -22,7 +22,7 @@
 </head>
 <body>
 
-    @if (User.IsInRole("Admin"))
+    @if (auth.HasRole(userName, "User"))
     {
         <form action="remove_role.cshtml" method="post">
 
